@@ -15,47 +15,112 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-local MigraineFrame
+local MigraineOverlay
 
+local MigraineLeft
+local MigraineRight
+local MigraineTop
+local MigraineBottom
+
+-- Builds "blocker" elements (completely black UI elements)
+function BuildBlocker (relativeTo, relativePoint, width, height)
+    -- Create the frame
+    Blocker = CreateFrame("Frame", nil, UIParent);
+	Blocker:SetClampedToScreen(true);
+	Blocker:SetPoint(relativeTo, UIParent, relativePoint);
+	Blocker:SetWidth(width);
+	Blocker:SetHeight(height);
+    -- Don't allow it to be moved
+	Blocker:SetMovable(false);
+    -- Ignore all input
+	Blocker:EnableMouse(false)
+	Blocker:EnableKeyboard(false)
+    -- Layer it to the background
+    Blocker:SetFrameStrata("BACKGROUND");
+    -- Default to hidden
+	Blocker:Hide()
+    -- Add a background
+    local bg = Blocker:CreateTexture();
+    bg:SetAllPoints(Blocker);
+    bg:SetColorTexture(0, 0, 0, 1);
+    return Blocker
+end
+
+-- Constructs MigraineLeft, MigraineRight, MigraineTop, MigraineBottom
+function BuildBlockers ()
+    local width = GetScreenWidth();
+    local height = GetScreenHeight();
+    local VertBlockWidth = width*0.27;
+    local HorizBlockHeight= height*0.25;
+    MigraineLeft = BuildBlocker("LEFT","LEFT", VertBlockWidth, height);
+    MigraineRight = BuildBlocker("RIGHT","RIGHT", VertBlockWidth, height);
+    MigraineTop = BuildBlocker("TOP","TOP",width,HorizBlockHeight);
+    MigraineBottom = BuildBlocker("BOTTOM","BOTTOM",width,HorizBlockHeight);
+end
+
+-- Constructs MigraineOverlay
 function BuildOverlay ()
     -- Our overlay should fit over the whole screen
     local width = GetScreenWidth();
     local height = GetScreenHeight();
     -- Create the frame
-    MigraineFrame = CreateFrame("Frame", "WoWMigraineHelper", UIParent);
-	MigraineFrame:SetClampedToScreen(true);
-	MigraineFrame:SetPoint("CENTER", UIParent, "CENTER");
-	MigraineFrame:SetWidth(width);
-	MigraineFrame:SetHeight(height);
+    MigraineOverlay = CreateFrame("Frame", "WoWMigraineHelper", UIParent);
+	MigraineOverlay:SetClampedToScreen(true);
+	MigraineOverlay:SetPoint("CENTER", UIParent, "CENTER");
+	MigraineOverlay:SetWidth(width);
+	MigraineOverlay:SetHeight(height);
     -- Don't allow it to be moved
-	MigraineFrame:SetMovable(false);
+	MigraineOverlay:SetMovable(false);
     -- Ignore all input
-	MigraineFrame:EnableMouse(false)
-	MigraineFrame:EnableKeyboard(false)
+	MigraineOverlay:EnableMouse(false)
+	MigraineOverlay:EnableKeyboard(false)
     -- Layer it to the background
-    MigraineFrame:SetFrameStrata("BACKGROUND");
+    MigraineOverlay:SetFrameStrata("BACKGROUND");
     -- Default to hidden
-	MigraineFrame:Hide()
+	MigraineOverlay:Hide()
     -- Add a background
-    local bg = MigraineFrame:CreateTexture();
-    bg:SetAllPoints(MigraineFrame);
+    local bg = MigraineOverlay:CreateTexture();
+    bg:SetAllPoints(MigraineOverlay);
     bg:SetColorTexture(0, 0, 0, 0.7);
 end
 
-function ToggleFrame ()
-    if MigraineFrame:IsShown() == true then
+-- Toggles the opacity overlay
+function ToggleDarkOverlay ()
+    if MigraineOverlay:IsShown() == true then
         print "Migraine mode off";
-        MigraineFrame:Hide();
+        MigraineOverlay:Hide();
     else
         print "Migraine mode on";
-        MigraineFrame:Show();
+        MigraineOverlay:Show();
     end
 end
 
+-- Toggles the screen-edge overlays
+function ToggleEdgeOverlay ()
+    if MigraineLeft:IsShown() == true then
+        print "Migraine edge mode off";
+        MigraineLeft:Hide();
+        MigraineRight:Hide();
+        MigraineTop:Hide();
+        MigraineBottom:Hide();
+    else
+        print "Migraine edge mode on";
+        MigraineLeft:Show();
+        MigraineRight:Show();
+        MigraineTop:Show();
+        MigraineBottom:Show();
+    end
+end
+
+-- Main initialization
 function main ()
-    SLASH_MIGRAINE1 = "/migraine";
-    SlashCmdList["MIGRAINE"] = ToggleFrame;
+    SLASH_MIGRAINEDARK1 = "/migrainedark";
+    SlashCmdList["MIGRAINEDARK"] = ToggleDarkOverlay;
+    SLASH_MIGRAINEEDGE1 = "/migraineedge";
+    SlashCmdList["MIGRAINEEDGE"] = ToggleEdgeOverlay;
+    BuildBlockers();
     BuildOverlay();
+    print "MigraineHelper available: /migraineedge, /migrainedark";
 end
 
 main();
