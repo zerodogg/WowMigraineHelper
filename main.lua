@@ -87,10 +87,8 @@ end
 -- Toggles the opacity overlay
 function ToggleMigraineHelperDarkOverlay ()
     if MigraineOverlay:IsShown() == true then
-        print "Migraine mode off";
         MigraineOverlay:Hide();
     else
-        print "Migraine mode on";
         MigraineOverlay:Show();
     end
 end
@@ -98,13 +96,11 @@ end
 -- Toggles the screen-edge overlays
 function ToggleMigraineHelperEdgeOverlay ()
     if MigraineLeft:IsShown() == true then
-        print "Migraine edge mode off";
         MigraineLeft:Hide();
         MigraineRight:Hide();
         MigraineTop:Hide();
         MigraineBottom:Hide();
     else
-        print "Migraine edge mode on";
         MigraineLeft:Show();
         MigraineRight:Show();
         MigraineTop:Show();
@@ -123,7 +119,6 @@ local function main ()
     BINDING_HEADER_MIGRAINEHELPER = "WoW Migraine Helper";
     BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
     BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
-    print "MigraineHelper available: /migraineedge, /migrainedark";
 end
 
 main();
