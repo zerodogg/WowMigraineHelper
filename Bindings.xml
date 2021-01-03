@@ -1,0 +1,8 @@
+<Bindings>
+  <Binding name="TOGGLEMIGRAINEBARS" runOnUp="false" header="MIGRAINEHELPER">
+      ToggleMigraineHelperEdgeOverlay();
+ </Binding>
+  <Binding name="TOGGLEMIGRAINEOVERLAY" runOnUp="false" header="MIGRAINEHELPER">
+      ToggleMigraineHelperDarkOverlay();
+ </Binding>
+</Bindings>

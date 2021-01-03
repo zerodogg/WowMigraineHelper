@@ -23,7 +23,7 @@ local MigraineTop
 local MigraineBottom
 
 -- Builds "blocker" elements (completely black UI elements)
-function BuildBlocker (relativeTo, relativePoint, width, height)
+local function BuildBlocker (relativeTo, relativePoint, width, height)
     -- Create the frame
     Blocker = CreateFrame("Frame", nil, UIParent);
 	Blocker:SetClampedToScreen(true);
@@ -47,7 +47,7 @@ function BuildBlocker (relativeTo, relativePoint, width, height)
 end
 
 -- Constructs MigraineLeft, MigraineRight, MigraineTop, MigraineBottom
-function BuildBlockers ()
+local function BuildBlockers ()
     local width = GetScreenWidth();
     local height = GetScreenHeight();
     local VertBlockWidth = width*0.27;
@@ -59,7 +59,7 @@ function BuildBlockers ()
 end
 
 -- Constructs MigraineOverlay
-function BuildOverlay ()
+local function BuildOverlay ()
     -- Our overlay should fit over the whole screen
     local width = GetScreenWidth();
     local height = GetScreenHeight();
@@ -85,7 +85,7 @@ function BuildOverlay ()
 end
 
 -- Toggles the opacity overlay
-function ToggleDarkOverlay ()
+function ToggleMigraineHelperDarkOverlay ()
     if MigraineOverlay:IsShown() == true then
         print "Migraine mode off";
         MigraineOverlay:Hide();
@@ -96,7 +96,7 @@ function ToggleDarkOverlay ()
 end
 
 -- Toggles the screen-edge overlays
-function ToggleEdgeOverlay ()
+function ToggleMigraineHelperEdgeOverlay ()
     if MigraineLeft:IsShown() == true then
         print "Migraine edge mode off";
         MigraineLeft:Hide();
@@ -113,13 +113,16 @@ function ToggleEdgeOverlay ()
 end
 
 -- Main initialization
-function main ()
+local function main ()
     SLASH_MIGRAINEDARK1 = "/migrainedark";
-    SlashCmdList["MIGRAINEDARK"] = ToggleDarkOverlay;
+    SlashCmdList["MIGRAINEDARK"] = ToggleMigraineHelperDarkOverlay;
     SLASH_MIGRAINEEDGE1 = "/migraineedge";
-    SlashCmdList["MIGRAINEEDGE"] = ToggleEdgeOverlay;
+    SlashCmdList["MIGRAINEEDGE"] = ToggleMigraineHelperEdgeOverlay;
     BuildBlockers();
     BuildOverlay();
+    BINDING_HEADER_MIGRAINEHELPER = "WoW Migraine Helper";
+    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
+    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
     print "MigraineHelper available: /migraineedge, /migrainedark";
 end
 
