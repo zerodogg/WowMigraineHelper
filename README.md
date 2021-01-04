@@ -26,3 +26,9 @@ work as normal.  By default this is bound to `CTRL-ALT-M`, or you can use
 
 If you want to change (or unbind) the default keybindings, you can do so in the
 WoW "Key Bindings" window under "Other".
+
+## Issues
+
+Please use the [issue tracker at
+Gitlab](https://gitlab.com/zerodogg/WowMigraineHelper/-/issues) to report any
+issues or submit feature requests.
