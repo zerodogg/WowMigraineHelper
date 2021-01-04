@@ -21,11 +21,12 @@ like the "Cloak of Ve'nari". Any UI elements placed on the edges of the screen
 work as normal.  By default this is bound to `CTRL-ALT-M`, or you can use
 `/migraineedge`.
 
+## Configuration
 
-## Key bindings
-
-If you want to change (or unbind) the default keybindings, you can do so in the
-WoW "Key Bindings" window under "Other".
+To configure Migraine Helper, open up the addon settings panel (`Esc` ->
+`Interface` -> `AddOns` -> `Migraine Helper`). There you can select the width
+and height of the edge overlay, the opacity of the dark overlay and configure
+the key bindings.
 
 ## Issues
 
