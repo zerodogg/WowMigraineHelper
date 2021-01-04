@@ -275,7 +275,62 @@ function MH:OnInitialize ()
                     name = "Opacity overlay",
                     get = function () return MH.MigraineOverlay:IsShown() end,
                     set = function () MH:ToggleOpacityOverlay() end,
-                }
+                },
+                wowConfigHeader = {
+                    order = 12,
+                    name = "WoW Config",
+                    type = "header",
+                },
+                wowConfigDescription = {
+                    order = 9,
+                    type = "description",
+                    name = "These are World of Warcraft configuration options, they are saved when you log out of the game.",
+                },
+                toggleNether = {
+                    order = 13,
+                    name = 'Enable the netherworld effect',
+                    desc = "Sets the CVar 'ffxNether'",
+                    width = "full",
+                    type = "toggle",
+                    get = function () return GetCVar("ffxNether") == "1" end,
+                    set = function (info, val)
+                        noVal = "0";
+                        if val == true then
+                            noVal = "1";
+                        end
+                        SetCVar("ffxNether",noVal)
+                    end,
+                },
+                toggleGlow = {
+                    order = 14,
+                    name = 'Enable full screen glow effects',
+                    desc = "Sets the CVar 'ffxGlow'",
+                    width = "full",
+                    type = "toggle",
+                    get = function () return GetCVar("ffxGlow") == "1" end,
+                    set = function (info, val)
+                        noVal = "0";
+                        if val == true then
+                            noVal = "1";
+                        end
+                        SetCVar("ffxGlow",noVal)
+                    end,
+                },
+                toggleDeathEff = {
+                    order = 15,
+                    name = 'Enable the full screen death effect',
+                    desc = "Sets the CVar 'ffxDeath'",
+                    width = "full",
+                    type = "toggle",
+                    get = function () return GetCVar("ffxDeath") == "1" end,
+                    set = function (info, val)
+                        noVal = "0";
+                        if val == true then
+                            noVal = "1";
+                        end
+                        SetCVar("ffxDeath",noVal)
+                    end,
+                },
 			},
 		}, {"migrainehelper"});
     AceConfigDialog:AddToBlizOptions("Migraine Helper");

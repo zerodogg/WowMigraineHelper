@@ -28,6 +28,11 @@ To configure Migraine Helper, open up the addon settings panel (`Esc` ->
 and height of the edge overlay, the opacity of the dark overlay and configure
 the key bindings.
 
+### WoW options
+
+Migraine Helper also gives you access to modify three game graphics settings in
+its UI panel. Toggling these may also help alleviate migraine.
+
 ## Issues
 
 Please use the [issue tracker at
