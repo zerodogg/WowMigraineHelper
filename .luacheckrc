@@ -1,5 +1,9 @@
 std = "lua51";
 
+exclude_files = {
+    "lib/",
+}
+
 globals = {
     -- Ours
     "SLASH_MIGRAINEDARK1",
@@ -7,17 +11,23 @@ globals = {
     "BINDING_HEADER_MIGRAINEHELPER",
     "BINDING_NAME_TOGGLEMIGRAINEBARS",
     "BINDING_NAME_TOGGLEMIGRAINEOVERLAY",
-    "ToggleMigraineHelperDarkOverlay",
-    "ToggleMigraineHelperEdgeOverlay",
+    "WowMigraineHelperConfig",
+    "MigraineHelper",
 
     -- From WoW
     "SlashCmdList",
 }
 
--- WoW API
 read_globals = {
+    -- WoW API
     "CreateFrame",
     "UIParent",
     "GetScreenWidth",
     "GetScreenHeight",
+    "GetBindingKey",
+    "SetBinding",
+    "GetCurrentBindingSet",
+    "SaveBindings",
+    -- Lua
+    "LibStub",
 }
