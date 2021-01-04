@@ -15,12 +15,10 @@
 -- You should have received a copy of the GNU General Public License
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-local MigraineOverlay
-
-local MigraineLeft
-local MigraineRight
-local MigraineTop
-local MigraineBottom
+local AceConfig = LibStub("AceConfig-3.0")
+local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper")
+local MH = MigraineHelper
 
 -- Builds "blocker" elements (completely black UI elements)
 local function BuildBlocker (relativeTo, relativePoint, width, height)
@@ -46,79 +44,239 @@ local function BuildBlocker (relativeTo, relativePoint, width, height)
     return Blocker
 end
 
--- Constructs MigraineLeft, MigraineRight, MigraineTop, MigraineBottom
-local function BuildBlockers ()
+-- Constructs the blocker widgets
+function MH:BuildBlockers ()
     local width = GetScreenWidth();
     local height = GetScreenHeight();
-    local VertBlockWidth = width*0.27;
-    local HorizBlockHeight= height*0.25;
-    MigraineLeft = BuildBlocker("LEFT","LEFT", VertBlockWidth, height);
-    MigraineRight = BuildBlocker("RIGHT","RIGHT", VertBlockWidth, height);
-    MigraineTop = BuildBlocker("TOP","TOP",width,HorizBlockHeight);
-    MigraineBottom = BuildBlocker("BOTTOM","BOTTOM",width,HorizBlockHeight);
+    local VertBlockWidth = width*WowMigraineHelperConfig.Width;
+    local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
+    self.MigraineLeft = BuildBlocker("LEFT","LEFT", VertBlockWidth, height);
+    self.MigraineRight =BuildBlocker("RIGHT","RIGHT", VertBlockWidth, height);
+    self.MigraineTop = BuildBlocker("TOP","TOP",width,HorizBlockHeight);
+    self.MigraineBottom = BuildBlocker("BOTTOM","BOTTOM",width,HorizBlockHeight);
+end
+
+-- Refreshes the blocker widgets
+function MH:RefreshBlockers ()
+    local width = GetScreenWidth();
+    local height = GetScreenHeight();
+    local VertBlockWidth = width*WowMigraineHelperConfig.Width;
+    local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
+    self.MigraineLeft:SetWidth(VertBlockWidth);
+    self.MigraineRight:SetWidth(VertBlockWidth);
+    self.MigraineLeft:SetHeight(height);
+    self.MigraineRight:SetHeight(height);
+
+    self.MigraineTop:SetWidth(width);
+    self.MigraineBottom:SetWidth(width);
+    self.MigraineTop:SetHeight(HorizBlockHeight);
+    self.MigraineBottom:SetHeight(HorizBlockHeight);
 end
 
 -- Constructs MigraineOverlay
-local function BuildOverlay ()
+function MH:BuildOverlay ()
     -- Our overlay should fit over the whole screen
     local width = GetScreenWidth();
     local height = GetScreenHeight();
     -- Create the frame
-    MigraineOverlay = CreateFrame("Frame", "WoWMigraineHelper", UIParent);
-	MigraineOverlay:SetClampedToScreen(true);
-	MigraineOverlay:SetPoint("CENTER", UIParent, "CENTER");
-	MigraineOverlay:SetWidth(width);
-	MigraineOverlay:SetHeight(height);
+    self.MigraineOverlay = CreateFrame("Frame", "WoWMigraineHelper", UIParent);
+	self.MigraineOverlay:SetClampedToScreen(true);
+	self.MigraineOverlay:SetPoint("CENTER", UIParent, "CENTER");
+	self.MigraineOverlay:SetWidth(width);
+	self.MigraineOverlay:SetHeight(height);
     -- Don't allow it to be moved
-	MigraineOverlay:SetMovable(false);
+	self.MigraineOverlay:SetMovable(false);
     -- Ignore all input
-	MigraineOverlay:EnableMouse(false)
-	MigraineOverlay:EnableKeyboard(false)
+	self.MigraineOverlay:EnableMouse(false)
+	self.MigraineOverlay:EnableKeyboard(false)
     -- Layer it to the background
-    MigraineOverlay:SetFrameStrata("BACKGROUND");
+    self.MigraineOverlay:SetFrameStrata("BACKGROUND");
     -- Default to hidden
-	MigraineOverlay:Hide()
+	self.MigraineOverlay:Hide()
     -- Add a background
-    local bg = MigraineOverlay:CreateTexture();
-    bg:SetAllPoints(MigraineOverlay);
-    bg:SetColorTexture(0, 0, 0, 0.7);
+    self.MigraineOverlay.bg = self.MigraineOverlay:CreateTexture();
+    self.MigraineOverlay.bg:SetAllPoints(self.MigraineOverlay);
+    self.MigraineOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
+end
+
+-- Refreshes the MigraineOverlay
+function MH:RefreshMigraineOverlay ()
+    self.MigraineOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
 -- Toggles the opacity overlay
-function ToggleMigraineHelperDarkOverlay ()
-    if MigraineOverlay:IsShown() == true then
-        MigraineOverlay:Hide();
+function MH:ToggleOpacityOverlay ()
+    if self.MigraineOverlay:IsShown() == true then
+        self.MigraineOverlay:Hide();
     else
-        MigraineOverlay:Show();
+        self:RefreshMigraineOverlay();
+        self.MigraineOverlay:Show();
     end
 end
 
 -- Toggles the screen-edge overlays
-function ToggleMigraineHelperEdgeOverlay ()
-    if MigraineLeft:IsShown() == true then
-        MigraineLeft:Hide();
-        MigraineRight:Hide();
-        MigraineTop:Hide();
-        MigraineBottom:Hide();
+function MH:ToggleEdgeOverlay ()
+    if self.MigraineLeft:IsShown() == true then
+        self.MigraineLeft:Hide();
+        self.MigraineRight:Hide();
+        self.MigraineTop:Hide();
+        self.MigraineBottom:Hide();
     else
-        MigraineLeft:Show();
-        MigraineRight:Show();
-        MigraineTop:Show();
-        MigraineBottom:Show();
+        self:RefreshBlockers();
+        self.MigraineLeft:Show();
+        self.MigraineRight:Show();
+        self.MigraineTop:Show();
+        self.MigraineBottom:Show();
+    end
+end
+
+-- Initialize the config
+function MH:InitConfig () -- luacheck: ignore 212
+    if WowMigraineHelperConfig == nil then
+        WowMigraineHelperConfig = {}
+    end
+    if WowMigraineHelperConfig.Width == nil then
+        WowMigraineHelperConfig.Width = 0.27;
+    end
+    if WowMigraineHelperConfig.Height == nil then
+        WowMigraineHelperConfig.Height = 0.27;
+    end
+    if WowMigraineHelperConfig.OverlayOpacity == nil then
+        WowMigraineHelperConfig.OverlayOpacity = 0.7;
     end
 end
 
 -- Main initialization
-local function main ()
+function MH:OnInitialize ()
     SLASH_MIGRAINEDARK1 = "/migrainedark";
-    SlashCmdList["MIGRAINEDARK"] = ToggleMigraineHelperDarkOverlay;
+    SlashCmdList["MIGRAINEDARK"] = function ()
+        MigraineHelper:ToggleOpacityOverlay();
+    end;
     SLASH_MIGRAINEEDGE1 = "/migraineedge";
-    SlashCmdList["MIGRAINEEDGE"] = ToggleMigraineHelperEdgeOverlay;
-    BuildBlockers();
-    BuildOverlay();
-    BINDING_HEADER_MIGRAINEHELPER = "WoW Migraine Helper";
+    SlashCmdList["MIGRAINEEDGE"] = function ()
+        MigraineHelper:ToggleEdgeOverlay();
+    end;
+    self:InitConfig();
+    self:BuildBlockers();
+    self:BuildOverlay();
+    BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
     BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
     BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
+	AceConfig:RegisterOptionsTable("Migraine Helper", {
+			type = "group",
+			args = {
+                blockerHeader = {
+                    name = "Edge blockers",
+                    type = "header",
+                    order = 0,
+                },
+				vertWidth = {
+                    order = 1,
+					name = "Width",
+					desc = "Sets the width of the vertical blockers",
+					type = "range",
+					set = function(info,val) -- luacheck: ignore 212
+                        WowMigraineHelperConfig.Width = val;
+                        MigraineHelper:RefreshBlockers();
+                    end,
+					get = function(info) return WowMigraineHelperConfig.Width end, -- luacheck: ignore 212
+                    isPercent = true,
+                    min = 0.01,
+                    max = 0.45,
+				},
+				horizHeight = {
+                    order = 2,
+					name = "Height",
+					desc = "Sets the height of the horizontal blockers",
+					type = "range",
+					set = function(info,val) -- luacheck: ignore 212
+                        WowMigraineHelperConfig.Height = val;
+                        MigraineHelper:RefreshBlockers();
+                    end,
+					get = function(info) return WowMigraineHelperConfig.Height end, -- luacheck: ignore 212
+                    isPercent = true,
+                    min = 0.01,
+                    max = 0.45,
+				},
+                opacityHeader = {
+                    order = 3,
+                    name = "Opacity overlay",
+                    type = "header",
+                },
+                opacity = {
+                    order = 4,
+                    name = "Opacity of overlay",
+                    desc = "The opacity of the dark overlay",
+                    type = "range",
+                    set = function (info,val) -- luacheck: ignore 212
+                        WowMigraineHelperConfig.OverlayOpacity = val;
+                        MigraineHelper:RefreshMigraineOverlay();
+                    end,
+                    get = function (info) return WowMigraineHelperConfig.OverlayOpacity end, -- luacheck: ignore 212
+                    min = 0.1,
+                    max = 0.99,
+                    isPercent = true,
+                },
+                keyBindingHeader = {
+                    order = 5,
+                    name = "Key bindings",
+                    type = "header",
+                },
+				blockerKeybinding = {
+					desc = "Bind a key to toggle the blockers",
+					type = "keybinding",
+					name = "Show/hide blockers",
+					order = 6,
+					width = "double",
+					set = function(info,val)
+						local b1, b2 = GetBindingKey("TOGGLEMIGRAINEBARS")
+						if b1 then SetBinding(b1) end
+						if b2 then SetBinding(b2) end
+						SetBinding(val, "TOGGLEMIGRAINEBARS")
+						SaveBindings(GetCurrentBindingSet())
+					end,
+					get = function(info) return GetBindingKey("TOGGLEMIGRAINEBARS") end,
+				},
+                opacityKeybinding = {
+                    desc = "Bind a key to toggle the opacity overlay",
+                    type = "keybinding",
+                    name = "Show/hide opacity overlay",
+                    order = 7,
+                    width = "double",
+                    set = function(info,val)
+                        local b1, b2 = GetBindingKey("TOGGLEMIGRAINEOVERLAY")
+                        if b1 then SetBinding(b1) end
+                        if b2 then SetBinding(b2) end
+                        SetBinding(val, "TOGGLEMIGRAINEOVERLAY")
+                        SaveBindings(GetCurrentBindingSet())
+                    end,
+                    get = function(info) return GetBindingKey("TOGGLEMIGRAINEOVERLAY") end,
+                },
+                toggleHeader = {
+                    order = 8,
+                    name = "Enable/disable",
+                    type = "header",
+                },
+                toggleDescription = {
+                    order = 9,
+                    type = "description",
+                    name = "Note: enabling/disabling the features here will not be permanent. They will still default to off on each login.",
+                },
+                toggleEdge = {
+                    order = 10,
+                    type = "toggle",
+                    name = "Edge blocker overlay",
+                    get = function () return MH.MigraineLeft:IsShown() end,
+                    set = function () MH:ToggleEdgeOverlay() end,
+                },
+                toggleOpacity = {
+                    order = 11,
+                    type = "toggle",
+                    name = "Opacity overlay",
+                    get = function () return MH.MigraineOverlay:IsShown() end,
+                    set = function () MH:ToggleOpacityOverlay() end,
+                }
+			},
+		}, {"migrainehelper"});
+    AceConfigDialog:AddToBlizOptions("Migraine Helper");
 end
-
-main();
