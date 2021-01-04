@@ -25,7 +25,7 @@ local MigraineBottom
 -- Builds "blocker" elements (completely black UI elements)
 local function BuildBlocker (relativeTo, relativePoint, width, height)
     -- Create the frame
-    Blocker = CreateFrame("Frame", nil, UIParent);
+    local Blocker = CreateFrame("Frame", nil, UIParent);
 	Blocker:SetClampedToScreen(true);
 	Blocker:SetPoint(relativeTo, UIParent, relativePoint);
 	Blocker:SetWidth(width);
