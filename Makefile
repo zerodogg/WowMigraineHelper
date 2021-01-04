@@ -35,7 +35,7 @@ wowace: clean
 libstub:
 	mkdir -p libs
 	wget -q "https://media.forgecdn.net/files/937/452/LibStub-1.0.2-70000.zip" -O LibStub.zip
-	unzip -q LibStub.zib
+	unzip -q LibStub.zip
 	mv LibStub libs
 	rm -f LibStub.zip
 libs: clean wowace libstub
