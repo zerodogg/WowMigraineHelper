@@ -324,19 +324,27 @@ end
 
 -- Main initialization
 function MH:OnInitialize ()
+    -- Initialize the config variable
+    self:InitConfig();
+    -- Initialize the config screen
+    self:InitConfigScreen();
+    -- Build our blocker overlay elements (hidden by default)
+    self:BuildBlockers();
+    -- Build our opacity overlay (hidden by default)
+    self:BuildOverlay();
+    -- Header for our section under keybindings
+    BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
+    -- Names for our keybindings
+    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
+    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
+    -- Slash function for toggling the opacity overlay
     SLASH_MIGRAINEDARK1 = "/migrainedark";
     SlashCmdList["MIGRAINEDARK"] = function ()
         MigraineHelper:ToggleOpacityOverlay();
     end;
+    -- Slash function for toggling the edge overlay
     SLASH_MIGRAINEEDGE1 = "/migraineedge";
     SlashCmdList["MIGRAINEEDGE"] = function ()
         MigraineHelper:ToggleEdgeOverlay();
     end;
-    self:InitConfig();
-    self:InitConfigScreen();
-    self:BuildBlockers();
-    self:BuildOverlay();
-    BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
-    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
-    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
 end
