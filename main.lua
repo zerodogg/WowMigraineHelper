@@ -228,14 +228,14 @@ function MH:OnInitialize ()
 					name = "Show/hide blockers",
 					order = 6,
 					width = "double",
-					set = function(info,val)
+					set = function(info,val) -- luacheck: ignore 212
 						local b1, b2 = GetBindingKey("TOGGLEMIGRAINEBARS")
 						if b1 then SetBinding(b1) end
 						if b2 then SetBinding(b2) end
 						SetBinding(val, "TOGGLEMIGRAINEBARS")
 						SaveBindings(GetCurrentBindingSet())
 					end,
-					get = function(info) return GetBindingKey("TOGGLEMIGRAINEBARS") end,
+					get = function(info) return GetBindingKey("TOGGLEMIGRAINEBARS") end, -- luacheck: ignore 212
 				},
                 opacityKeybinding = {
                     desc = "Bind a key to toggle the opacity overlay",
@@ -243,14 +243,14 @@ function MH:OnInitialize ()
                     name = "Show/hide opacity overlay",
                     order = 7,
                     width = "double",
-                    set = function(info,val)
+					set = function(info,val) -- luacheck: ignore 212
                         local b1, b2 = GetBindingKey("TOGGLEMIGRAINEOVERLAY")
                         if b1 then SetBinding(b1) end
                         if b2 then SetBinding(b2) end
                         SetBinding(val, "TOGGLEMIGRAINEOVERLAY")
                         SaveBindings(GetCurrentBindingSet())
                     end,
-                    get = function(info) return GetBindingKey("TOGGLEMIGRAINEOVERLAY") end,
+                    get = function(info) return GetBindingKey("TOGGLEMIGRAINEOVERLAY") end, -- luacheck: ignore 212
                 },
                 toggleHeader = {
                     order = 8,
