@@ -1,6 +1,7 @@
 SHELL=/bin/bash
+VERSION:=$(shell grep Version: WowMigraineHelper.toc|perl -p -E 's/.+Version:\s+//')
 
-test: lint validateTOC
+test: lint validateTOC validateChangelog
 lint:
 	luacheck .
 validateTOC:
@@ -12,3 +13,8 @@ validateTOC:
 			fi;\
 		fi;\
 	done
+validateChangelog:
+	@if ! egrep -q "# $(VERSION)$$" CHANGELOG.md; then\
+		echo "$(VERSION) missing from CHANGELOG.md";\
+		exit 1;\
+	fi
