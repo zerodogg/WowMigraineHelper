@@ -30,6 +30,8 @@ read_globals = {
     "SetBinding",
     "GetCurrentBindingSet",
     "SaveBindings",
+    "SetCVar",
+    "GetCVar",
     -- Lua
     "LibStub",
 }

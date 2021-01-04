@@ -293,8 +293,8 @@ function MH:OnInitialize ()
                     width = "full",
                     type = "toggle",
                     get = function () return GetCVar("ffxNether") == "1" end,
-                    set = function (info, val)
-                        noVal = "0";
+                    set = function (info, val) -- luacheck: ignore 212
+                        local noVal = "0";
                         if val == true then
                             noVal = "1";
                         end
@@ -308,8 +308,8 @@ function MH:OnInitialize ()
                     width = "full",
                     type = "toggle",
                     get = function () return GetCVar("ffxGlow") == "1" end,
-                    set = function (info, val)
-                        noVal = "0";
+                    set = function (info, val) -- luacheck: ignore 212
+                        local noVal = "0";
                         if val == true then
                             noVal = "1";
                         end
@@ -323,8 +323,8 @@ function MH:OnInitialize ()
                     width = "full",
                     type = "toggle",
                     get = function () return GetCVar("ffxDeath") == "1" end,
-                    set = function (info, val)
-                        noVal = "0";
+                    set = function (info, val) -- luacheck: ignore 212
+                        local noVal = "0";
                         if val == true then
                             noVal = "1";
                         end
