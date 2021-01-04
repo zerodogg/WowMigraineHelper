@@ -2,5 +2,10 @@
 ## Title: WoW Migraine Helper
 ## Author: Eskild Hustvedt
 ## Version: 0.1
+## Notes: A very simple helper addon to mitigate migraine-inducing graphics
+## X-License: GPL v3
+## X-Website: https://gitlab.com/zerodogg/WowMigraineHelper
+## SavedVariables: WowMigraineHelperConfig
 
 main.lua
+embeds.xml
