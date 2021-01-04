@@ -146,22 +146,8 @@ function MH:InitConfig () -- luacheck: ignore 212
     end
 end
 
--- Main initialization
-function MH:OnInitialize ()
-    SLASH_MIGRAINEDARK1 = "/migrainedark";
-    SlashCmdList["MIGRAINEDARK"] = function ()
-        MigraineHelper:ToggleOpacityOverlay();
-    end;
-    SLASH_MIGRAINEEDGE1 = "/migraineedge";
-    SlashCmdList["MIGRAINEEDGE"] = function ()
-        MigraineHelper:ToggleEdgeOverlay();
-    end;
-    self:InitConfig();
-    self:BuildBlockers();
-    self:BuildOverlay();
-    BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
-    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
-    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
+-- Initialize our config screen
+function MH:InitConfigScreen ()  -- luacheck: ignore 212
 	AceConfig:RegisterOptionsTable("Migraine Helper", {
 			type = "group",
 			args = {
@@ -334,4 +320,23 @@ function MH:OnInitialize ()
 			},
 		}, {"migrainehelper"});
     AceConfigDialog:AddToBlizOptions("Migraine Helper");
+end
+
+-- Main initialization
+function MH:OnInitialize ()
+    SLASH_MIGRAINEDARK1 = "/migrainedark";
+    SlashCmdList["MIGRAINEDARK"] = function ()
+        MigraineHelper:ToggleOpacityOverlay();
+    end;
+    SLASH_MIGRAINEEDGE1 = "/migraineedge";
+    SlashCmdList["MIGRAINEEDGE"] = function ()
+        MigraineHelper:ToggleEdgeOverlay();
+    end;
+    self:InitConfig();
+    self:InitConfigScreen();
+    self:BuildBlockers();
+    self:BuildOverlay();
+    BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
+    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
+    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
 end
