@@ -1,0 +1,9 @@
+image: registry.gitlab.com/zerodogg/zd-gl-buildcontainer:latest
+
+test:
+    stage: test
+    script:
+        - make test
+
+stages:
+    - test
