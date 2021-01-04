@@ -6,6 +6,7 @@
 ## X-License: GPL v3
 ## X-Website: https://gitlab.com/zerodogg/WowMigraineHelper
 ## SavedVariables: WowMigraineHelperConfig
+## X-Curse-Project-ID: 433562
 
 main.lua
 embeds.xml
