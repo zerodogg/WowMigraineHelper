@@ -1,5 +1,7 @@
 # WoW Migraine Helper
 
+[![pipeline status](https://gitlab.com/zerodogg/WowMigraineHelper/badges/master/pipeline.svg)](https://gitlab.com/zerodogg/WowMigraineHelper/-/commits/master)
+
 Some areas in WoW have graphics that can hurt for people who suffer from
 Migraines. This is a hack containing two different helpers that can mitigate
 some of the effect.
