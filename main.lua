@@ -282,12 +282,12 @@ function MH:OnInitialize ()
                     type = "header",
                 },
                 wowConfigDescription = {
-                    order = 9,
+                    order = 13,
                     type = "description",
                     name = "These are World of Warcraft configuration options, they are saved when you log out of the game.",
                 },
                 toggleNether = {
-                    order = 13,
+                    order = 14,
                     name = 'Enable the netherworld effect',
                     desc = "Sets the CVar 'ffxNether'",
                     width = "full",
@@ -302,7 +302,7 @@ function MH:OnInitialize ()
                     end,
                 },
                 toggleGlow = {
-                    order = 14,
+                    order = 15,
                     name = 'Enable full screen glow effects',
                     desc = "Sets the CVar 'ffxGlow'",
                     width = "full",
@@ -317,7 +317,7 @@ function MH:OnInitialize ()
                     end,
                 },
                 toggleDeathEff = {
-                    order = 15,
+                    order = 16,
                     name = 'Enable the full screen death effect',
                     desc = "Sets the CVar 'ffxDeath'",
                     width = "full",
