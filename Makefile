@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-DISTFILES=*.xml *.lua *.md libs
+DISTFILES=*.xml *.lua *.md *.toc libs
 VERSION:=$(shell grep Version: WowMigraineHelper.toc|perl -p -E 's/.+Version:\s+//')
 
 test: prep lint validateTOC validateChangelog
