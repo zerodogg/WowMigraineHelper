@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-DISTFILES=*.xml *.lua *.md *.toc libs
+DISTFILES=COPYING *.xml *.lua *.md *.toc libs
 VERSION:=$(shell grep Version: WowMigraineHelper.toc|perl -p -E 's/.+Version:\s+//')
 ACE3_RELEASE=r1241
 LIBSTUB_RELEASE=1.0.2-70000
