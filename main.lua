@@ -17,6 +17,7 @@
 
 local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+local AceConfigRegistry = LibStub("AceConfigRegistry-3.0");
 MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper","AceEvent-3.0")
 local MH = MigraineHelper
 
@@ -134,6 +135,7 @@ function MH:ToggleBrightnessFilter ()
         self:RefreshBrightnessFilterOverlay();
         self.BrightnessFilterOverlay:Show();
     end
+    self:RefreshConfigDialog();
 end
 
 -- Toggles the screen-edge overlays
@@ -150,6 +152,13 @@ function MH:ToggleFrameOverlay ()
         self.FrameTop:Show();
         self.FrameBottom:Show();
     end
+    self:RefreshConfigDialog();
+end
+
+-- Notifies AceConfigDialog about changes to config options (ie. the overlays
+-- having been toggled)
+function MH:RefreshConfigDialog () -- luacheck: ignore 212
+    AceConfigRegistry:NotifyChange("Migraine Helper");
 end
 
 -- ----------------------------------------

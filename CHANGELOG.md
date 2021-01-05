@@ -4,6 +4,8 @@
     accordingly
 - Renamed "blockers" to "frame" and "opacity overlay" to "brightness filter"
     for clarity
+- Made the config dialog refresh itself if the overlays are toggled through
+    hotkeys or slash commands
 
 #### 0.1.1
 
