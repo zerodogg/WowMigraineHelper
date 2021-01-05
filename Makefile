@@ -31,7 +31,7 @@ wowace: clean
 	rm -rf libs/Ace*
 	wget -q "https://media.forgecdn.net/files/3078/383/Ace3-Release-r1241.zip" -O Ace3.zip
 	unzip -q Ace3.zip
-	mv Ace3/AceGUI-3.0 Ace3/AceConfig-3.0 Ace3/AceAddon-3.0 libs
+	mv Ace3/AceGUI-3.0 Ace3/AceConfig-3.0 Ace3/AceAddon-3.0 Ace3/AceEvent-3.0 libs
 	rm -rf Ace3 Ace3.zip
 libstub:
 	mkdir -p libs

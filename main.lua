@@ -17,7 +17,7 @@
 
 local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper")
+MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper","AceEvents-3.0")
 local MH = MigraineHelper
 
 -- -----------------
@@ -90,9 +90,9 @@ function MH:BuildOverlay ()
     self.MigraineOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
--- ----------------------------------------------
--- Overlay refresh methods (after config changes)
--- ----------------------------------------------
+-- ---------------------------------------------------------
+-- Overlay refresh methods (after config or display changes)
+-- ---------------------------------------------------------
 
 -- Refreshes the blocker widgets
 function MH:RefreshBlockers ()
@@ -114,6 +114,12 @@ end
 -- Refreshes the MigraineOverlay
 function MH:RefreshMigraineOverlay ()
     self.MigraineOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
+end
+
+-- Force-refreshes both when the DISPLAY_SIZE_CHANGED event is received
+function MH:DISPLAY_SIZE_CHANGED ()
+    self:RefreshMigraineOverlay();
+    self:RefreshBlockers();
 end
 
 -- ----------------------
@@ -342,12 +348,21 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
     AceConfigDialog:AddToBlizOptions("Migraine Helper");
 end
 
+-- Initialize events
+function MH:InitEvents ()
+    -- Register for the DISPLAY_SIZE_CHANGED that will notify us if the
+    -- resolution changes (which for us means we need to resize the overlays).
+    self:RegisterEvent("DISPLAY_SIZE_CHANGED")
+end
+
 -- Main initialization
 function MH:OnInitialize ()
     -- Initialize the config variable
     self:InitConfig();
     -- Initialize the config screen
     self:InitConfigScreen();
+    -- Initialize event listeners
+    self:InitEvents();
     -- Build our blocker overlay elements (hidden by default)
     self:BuildBlockers();
     -- Build our opacity overlay (hidden by default)
