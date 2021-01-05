@@ -20,28 +20,39 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper")
 local MH = MigraineHelper
 
--- Builds "blocker" elements (completely black UI elements)
-local function BuildBlocker (relativeTo, relativePoint, width, height)
-    -- Create the frame
-    local Blocker = CreateFrame("Frame", nil, UIParent);
-	Blocker:SetClampedToScreen(true);
-	Blocker:SetPoint(relativeTo, UIParent, relativePoint);
-	Blocker:SetWidth(width);
-	Blocker:SetHeight(height);
-    -- Don't allow it to be moved
-	Blocker:SetMovable(false);
-    -- Ignore all input
-	Blocker:EnableMouse(false)
-	Blocker:EnableKeyboard(false)
-    -- Layer it to the background
-    Blocker:SetFrameStrata("BACKGROUND");
-    -- Default to hidden
-	Blocker:Hide()
-    -- Add a background
-    local bg = Blocker:CreateTexture();
-    bg:SetAllPoints(Blocker);
+-- Builds a component of our framing elements
+function MH:BuildFrameElement (relativeTo, relativePoint, width, height)
+    local Element = self:BuildOverlayElement(relativeTo,relativePoint,width,height)
+    -- Add a solid black background
+    local bg = Element:CreateTexture();
+        -- Size it to cover the entire element
+    bg:SetAllPoints(Element);
+        -- Make it solid black
     bg:SetColorTexture(0, 0, 0, 1);
-    return Blocker
+    return Element
+end
+
+-- Builds a generic overlay element that defaults to hidden
+function MH:BuildOverlayElement(relativeTo, relativePoint, width, height)
+    -- Create the frame
+    local Element = CreateFrame("Frame", nil, UIParent);
+    -- Default to hidden
+	Element:Hide()
+    -- Don't allow the frame to go offscreen
+	Element:SetClampedToScreen(true);
+    -- Set the placement of the element
+	Element:SetPoint(relativeTo, UIParent, relativePoint);
+    -- Sizing
+	Element:SetWidth(width);
+	Element:SetHeight(height);
+    -- Don't allow it to be moved
+	Element:SetMovable(false);
+    -- Ignore all input
+	Element:EnableMouse(false)
+	Element:EnableKeyboard(false)
+    -- Layer it to the background
+    Element:SetFrameStrata("BACKGROUND");
+    return Element
 end
 
 -- Constructs the blocker widgets
@@ -50,10 +61,25 @@ function MH:BuildBlockers ()
     local height = GetScreenHeight();
     local VertBlockWidth = width*WowMigraineHelperConfig.Width;
     local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
-    self.MigraineLeft = BuildBlocker("LEFT","LEFT", VertBlockWidth, height);
-    self.MigraineRight =BuildBlocker("RIGHT","RIGHT", VertBlockWidth, height);
-    self.MigraineTop = BuildBlocker("TOP","TOP",width,HorizBlockHeight);
-    self.MigraineBottom = BuildBlocker("BOTTOM","BOTTOM",width,HorizBlockHeight);
+    self.MigraineLeft = self:BuildFrameElement("LEFT","LEFT", VertBlockWidth, height);
+    self.MigraineRight =self:BuildFrameElement("RIGHT","RIGHT", VertBlockWidth, height);
+    self.MigraineTop = self:BuildFrameElement("TOP","TOP",width,HorizBlockHeight);
+    self.MigraineBottom = self:BuildFrameElement("BOTTOM","BOTTOM",width,HorizBlockHeight);
+end
+
+-- Constructs MigraineOverlay
+function MH:BuildOverlay ()
+    -- Our overlay should fit over the whole screen
+    local width = GetScreenWidth();
+    local height = GetScreenHeight();
+    -- Create the frame
+    self.MigraineOverlay = self:BuildOverlayElement("CENTER","CENTER",width,height);
+    -- Add a background
+    self.MigraineOverlay.bg = self.MigraineOverlay:CreateTexture();
+        -- Size the background to cover all of the overlay
+    self.MigraineOverlay.bg:SetAllPoints(self.MigraineOverlay);
+        -- Add a black colour with the opacity set in the config
+    self.MigraineOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
 -- Refreshes the blocker widgets
@@ -71,32 +97,6 @@ function MH:RefreshBlockers ()
     self.MigraineBottom:SetWidth(width);
     self.MigraineTop:SetHeight(HorizBlockHeight);
     self.MigraineBottom:SetHeight(HorizBlockHeight);
-end
-
--- Constructs MigraineOverlay
-function MH:BuildOverlay ()
-    -- Our overlay should fit over the whole screen
-    local width = GetScreenWidth();
-    local height = GetScreenHeight();
-    -- Create the frame
-    self.MigraineOverlay = CreateFrame("Frame", "WoWMigraineHelper", UIParent);
-	self.MigraineOverlay:SetClampedToScreen(true);
-	self.MigraineOverlay:SetPoint("CENTER", UIParent, "CENTER");
-	self.MigraineOverlay:SetWidth(width);
-	self.MigraineOverlay:SetHeight(height);
-    -- Don't allow it to be moved
-	self.MigraineOverlay:SetMovable(false);
-    -- Ignore all input
-	self.MigraineOverlay:EnableMouse(false)
-	self.MigraineOverlay:EnableKeyboard(false)
-    -- Layer it to the background
-    self.MigraineOverlay:SetFrameStrata("BACKGROUND");
-    -- Default to hidden
-	self.MigraineOverlay:Hide()
-    -- Add a background
-    self.MigraineOverlay.bg = self.MigraineOverlay:CreateTexture();
-    self.MigraineOverlay.bg:SetAllPoints(self.MigraineOverlay);
-    self.MigraineOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
 -- Refreshes the MigraineOverlay
