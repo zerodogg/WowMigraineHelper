@@ -296,7 +296,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 wowConfigDescription = {
                     order = 13,
                     type = "description",
-                    name = "These are World of Warcraft configuration options, they are saved when you log out of the game.",
+                    name = "These are World of Warcraft configuration options, they are saved when you log out of the game. Changes to these will persist even if you remove the Migraine Helper addon.",
                 },
                 toggleNether = {
                     order = 14,
