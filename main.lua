@@ -20,6 +20,10 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper")
 local MH = MigraineHelper
 
+-- -----------------
+-- UI helper methods
+-- -----------------
+
 -- Builds a component of our framing elements
 function MH:BuildFrameElement (relativeTo, relativePoint, width, height)
     local Element = self:BuildOverlayElement(relativeTo,relativePoint,width,height)
@@ -55,6 +59,10 @@ function MH:BuildOverlayElement(relativeTo, relativePoint, width, height)
     return Element
 end
 
+-- ----------------------------
+-- Overlay construction methods
+-- ----------------------------
+
 -- Constructs the blocker widgets
 function MH:BuildBlockers ()
     local width = GetScreenWidth();
@@ -82,6 +90,10 @@ function MH:BuildOverlay ()
     self.MigraineOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
+-- ----------------------------------------------
+-- Overlay refresh methods (after config changes)
+-- ----------------------------------------------
+
 -- Refreshes the blocker widgets
 function MH:RefreshBlockers ()
     local width = GetScreenWidth();
@@ -103,6 +115,10 @@ end
 function MH:RefreshMigraineOverlay ()
     self.MigraineOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
 end
+
+-- ----------------------
+-- Overlay toggle methods
+-- ----------------------
 
 -- Toggles the opacity overlay
 function MH:ToggleOpacityOverlay ()
@@ -129,6 +145,10 @@ function MH:ToggleEdgeOverlay ()
         self.MigraineBottom:Show();
     end
 end
+
+-- ----------------------------------------
+-- Initialization and configuration methods
+-- ----------------------------------------
 
 -- Initialize the config
 function MH:InitConfig () -- luacheck: ignore 212
