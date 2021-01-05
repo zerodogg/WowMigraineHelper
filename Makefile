@@ -1,6 +1,8 @@
 SHELL=/bin/bash
 DISTFILES=*.xml *.lua *.md *.toc libs
 VERSION:=$(shell grep Version: WowMigraineHelper.toc|perl -p -E 's/.+Version:\s+//')
+ACE3_RELEASE=r1241
+LIBSTUB_RELEASE=1.0.2-70000
 
 test: prep lint validateTOC validateChangelog
 lint: prep
@@ -29,14 +31,14 @@ clean:
 wowace: clean
 	mkdir -p libs
 	rm -rf libs/Ace*
-	wget -q "https://media.forgecdn.net/files/3078/383/Ace3-Release-r1241.zip" -O Ace3.zip
+	wget -q "https://media.forgecdn.net/files/3078/383/Ace3-Release-$(ACE3_RELEASE).zip" -O Ace3.zip
 	unzip -q Ace3.zip
 	mv Ace3/AceGUI-3.0 Ace3/AceConfig-3.0 Ace3/AceAddon-3.0 Ace3/AceEvent-3.0 libs
 	rm -rf Ace3 Ace3.zip
 libstub:
 	mkdir -p libs
 	rm -rf libs/LibStub
-	wget -q "https://media.forgecdn.net/files/937/452/LibStub-1.0.2-70000.zip" -O LibStub.zip
+	wget -q "https://media.forgecdn.net/files/937/452/LibStub-$(LIBSTUB_RELEASE).zip" -O LibStub.zip
 	unzip -q LibStub.zip
 	mv LibStub libs
 	rm -f LibStub.zip
