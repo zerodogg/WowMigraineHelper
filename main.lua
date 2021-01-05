@@ -63,92 +63,92 @@ end
 -- Overlay construction methods
 -- ----------------------------
 
--- Constructs the blocker widgets
-function MH:BuildBlockers ()
+-- Constructs the framing elements
+function MH:BuildFrame ()
     local width = GetScreenWidth();
     local height = GetScreenHeight();
     local VertBlockWidth = width*WowMigraineHelperConfig.Width;
     local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
-    self.MigraineLeft = self:BuildFrameElement("LEFT","LEFT", VertBlockWidth, height);
-    self.MigraineRight =self:BuildFrameElement("RIGHT","RIGHT", VertBlockWidth, height);
-    self.MigraineTop = self:BuildFrameElement("TOP","TOP",width,HorizBlockHeight);
-    self.MigraineBottom = self:BuildFrameElement("BOTTOM","BOTTOM",width,HorizBlockHeight);
+    self.FrameLeft = self:BuildFrameElement("LEFT","LEFT", VertBlockWidth, height);
+    self.FrameRight =self:BuildFrameElement("RIGHT","RIGHT", VertBlockWidth, height);
+    self.FrameTop = self:BuildFrameElement("TOP","TOP",width,HorizBlockHeight);
+    self.FrameBottom = self:BuildFrameElement("BOTTOM","BOTTOM",width,HorizBlockHeight);
 end
 
--- Constructs MigraineOverlay
+-- Constructs BrightnessFilterOverlay
 function MH:BuildOverlay ()
     -- Our overlay should fit over the whole screen
     local width = GetScreenWidth();
     local height = GetScreenHeight();
     -- Create the frame
-    self.MigraineOverlay = self:BuildOverlayElement("CENTER","CENTER",width,height);
+    self.BrightnessFilterOverlay = self:BuildOverlayElement("CENTER","CENTER",width,height);
     -- Add a background
-    self.MigraineOverlay.bg = self.MigraineOverlay:CreateTexture();
+    self.BrightnessFilterOverlay.bg = self.BrightnessFilterOverlay:CreateTexture();
         -- Size the background to cover all of the overlay
-    self.MigraineOverlay.bg:SetAllPoints(self.MigraineOverlay);
+    self.BrightnessFilterOverlay.bg:SetAllPoints(self.BrightnessFilterOverlay);
         -- Add a black colour with the opacity set in the config
-    self.MigraineOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
+    self.BrightnessFilterOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
 -- ---------------------------------------------------------
 -- Overlay refresh methods (after config or display changes)
 -- ---------------------------------------------------------
 
--- Refreshes the blocker widgets
-function MH:RefreshBlockers ()
+-- Refreshes the framing widgets
+function MH:RefreshFrame ()
     local width = GetScreenWidth();
     local height = GetScreenHeight();
     local VertBlockWidth = width*WowMigraineHelperConfig.Width;
     local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
-    self.MigraineLeft:SetWidth(VertBlockWidth);
-    self.MigraineRight:SetWidth(VertBlockWidth);
-    self.MigraineLeft:SetHeight(height);
-    self.MigraineRight:SetHeight(height);
+    self.FrameLeft:SetWidth(VertBlockWidth);
+    self.FrameRight:SetWidth(VertBlockWidth);
+    self.FrameLeft:SetHeight(height);
+    self.FrameRight:SetHeight(height);
 
-    self.MigraineTop:SetWidth(width);
-    self.MigraineBottom:SetWidth(width);
-    self.MigraineTop:SetHeight(HorizBlockHeight);
-    self.MigraineBottom:SetHeight(HorizBlockHeight);
+    self.FrameTop:SetWidth(width);
+    self.FrameBottom:SetWidth(width);
+    self.FrameTop:SetHeight(HorizBlockHeight);
+    self.FrameBottom:SetHeight(HorizBlockHeight);
 end
 
--- Refreshes the MigraineOverlay
-function MH:RefreshMigraineOverlay ()
-    self.MigraineOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
+-- Refreshes the BrightnessFilterOverlay
+function MH:RefreshBrightnessFilterOverlay ()
+    self.BrightnessFilterOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
 end
 
 -- Force-refreshes both when the DISPLAY_SIZE_CHANGED event is received
 function MH:DISPLAY_SIZE_CHANGED ()
-    self:RefreshMigraineOverlay();
-    self:RefreshBlockers();
+    self:RefreshBrightnessFilterOverlay();
+    self:RefreshFrame();
 end
 
 -- ----------------------
 -- Overlay toggle methods
 -- ----------------------
 
--- Toggles the opacity overlay
-function MH:ToggleOpacityOverlay ()
-    if self.MigraineOverlay:IsShown() == true then
-        self.MigraineOverlay:Hide();
+-- Toggles the brightness filter
+function MH:ToggleBrightnessFilter ()
+    if self.BrightnessFilterOverlay:IsShown() == true then
+        self.BrightnessFilterOverlay:Hide();
     else
-        self:RefreshMigraineOverlay();
-        self.MigraineOverlay:Show();
+        self:RefreshBrightnessFilterOverlay();
+        self.BrightnessFilterOverlay:Show();
     end
 end
 
 -- Toggles the screen-edge overlays
-function MH:ToggleEdgeOverlay ()
-    if self.MigraineLeft:IsShown() == true then
-        self.MigraineLeft:Hide();
-        self.MigraineRight:Hide();
-        self.MigraineTop:Hide();
-        self.MigraineBottom:Hide();
+function MH:ToggleFrameOverlay ()
+    if self.FrameLeft:IsShown() == true then
+        self.FrameLeft:Hide();
+        self.FrameRight:Hide();
+        self.FrameTop:Hide();
+        self.FrameBottom:Hide();
     else
-        self:RefreshBlockers();
-        self.MigraineLeft:Show();
-        self.MigraineRight:Show();
-        self.MigraineTop:Show();
-        self.MigraineBottom:Show();
+        self:RefreshFrame();
+        self.FrameLeft:Show();
+        self.FrameRight:Show();
+        self.FrameTop:Show();
+        self.FrameBottom:Show();
     end
 end
 
@@ -177,19 +177,19 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
 	AceConfig:RegisterOptionsTable("Migraine Helper", {
 			type = "group",
 			args = {
-                blockerHeader = {
-                    name = "Edge blockers",
+                frameHeader = {
+                    name = "Screen frame",
                     type = "header",
                     order = 0,
                 },
 				vertWidth = {
                     order = 1,
 					name = "Width",
-					desc = "Sets the width of the vertical blockers",
+					desc = "Sets the vertical width of the frame",
 					type = "range",
 					set = function(info,val) -- luacheck: ignore 212
                         WowMigraineHelperConfig.Width = val;
-                        MigraineHelper:RefreshBlockers();
+                        MigraineHelper:RefreshFrame();
                     end,
 					get = function(info) return WowMigraineHelperConfig.Width end, -- luacheck: ignore 212
                     isPercent = true,
@@ -199,30 +199,30 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
 				horizHeight = {
                     order = 2,
 					name = "Height",
-					desc = "Sets the height of the horizontal blockers",
+					desc = "Sets the horizontal height of the frame",
 					type = "range",
 					set = function(info,val) -- luacheck: ignore 212
                         WowMigraineHelperConfig.Height = val;
-                        MigraineHelper:RefreshBlockers();
+                        MigraineHelper:RefreshFrame();
                     end,
 					get = function(info) return WowMigraineHelperConfig.Height end, -- luacheck: ignore 212
                     isPercent = true,
                     min = 0.01,
                     max = 0.45,
 				},
-                opacityHeader = {
+                brightnessFilterHeader = {
                     order = 3,
-                    name = "Opacity overlay",
+                    name = "Brightness filter",
                     type = "header",
                 },
-                opacity = {
+                brightnessFilter = {
                     order = 4,
-                    name = "Opacity of overlay",
-                    desc = "The opacity of the dark overlay",
+                    name = "Filter strength",
+                    desc = "The opacity of the brightness filter overlay",
                     type = "range",
                     set = function (info,val) -- luacheck: ignore 212
                         WowMigraineHelperConfig.OverlayOpacity = val;
-                        MigraineHelper:RefreshMigraineOverlay();
+                        MigraineHelper:RefreshBrightnessFilterOverlay();
                     end,
                     get = function (info) return WowMigraineHelperConfig.OverlayOpacity end, -- luacheck: ignore 212
                     min = 0.1,
@@ -234,10 +234,10 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     name = "Key bindings",
                     type = "header",
                 },
-				blockerKeybinding = {
-					desc = "Bind a key to toggle the blockers",
+				frameKeybinding = {
+					desc = "Bind a key to toggle the frame",
 					type = "keybinding",
-					name = "Show/hide blockers",
+					name = "Show/hide frame",
 					order = 6,
 					width = "double",
 					set = function(info,val) -- luacheck: ignore 212
@@ -249,10 +249,10 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
 					end,
 					get = function(info) return GetBindingKey("TOGGLEMIGRAINEBARS") end, -- luacheck: ignore 212
 				},
-                opacityKeybinding = {
-                    desc = "Bind a key to toggle the opacity overlay",
+                brightnessFilterKeybinding = {
+                    desc = "Bind a key to toggle the brightness filter",
                     type = "keybinding",
-                    name = "Show/hide opacity overlay",
+                    name = "Enable/disable the brightness filter",
                     order = 7,
                     width = "double",
 					set = function(info,val) -- luacheck: ignore 212
@@ -277,16 +277,16 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 toggleEdge = {
                     order = 10,
                     type = "toggle",
-                    name = "Edge blocker overlay",
-                    get = function () return MH.MigraineLeft:IsShown() end,
-                    set = function () MH:ToggleEdgeOverlay() end,
+                    name = "Frame overlay",
+                    get = function () return MH.FrameLeft:IsShown() end,
+                    set = function () MH:ToggleFrameOverlay() end,
                 },
                 toggleOpacity = {
                     order = 11,
                     type = "toggle",
-                    name = "Opacity overlay",
-                    get = function () return MH.MigraineOverlay:IsShown() end,
-                    set = function () MH:ToggleOpacityOverlay() end,
+                    name = "Brightness filter",
+                    get = function () return MH.BrightnessFilterOverlay:IsShown() end,
+                    set = function () MH:ToggleBrightnessFilter() end,
                 },
                 wowConfigHeader = {
                     order = 12,
@@ -363,23 +363,23 @@ function MH:OnInitialize ()
     self:InitConfigScreen();
     -- Initialize event listeners
     self:InitEvents();
-    -- Build our blocker overlay elements (hidden by default)
-    self:BuildBlockers();
-    -- Build our opacity overlay (hidden by default)
+    -- Build our framing overlay elements (hidden by default)
+    self:BuildFrame();
+    -- Build our brightness filter overlay (hidden by default)
     self:BuildOverlay();
     -- Header for our section under keybindings
     BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
     -- Names for our keybindings
     BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
     BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
-    -- Slash function for toggling the opacity overlay
+    -- Slash function for toggling the brightness filter overlay
     SLASH_MIGRAINEDARK1 = "/migrainedark";
     SlashCmdList["MIGRAINEDARK"] = function ()
-        MigraineHelper:ToggleOpacityOverlay();
+        MigraineHelper:ToggleBrightnessFilter();
     end;
     -- Slash function for toggling the edge overlay
     SLASH_MIGRAINEEDGE1 = "/migraineedge";
     SlashCmdList["MIGRAINEEDGE"] = function ()
-        MigraineHelper:ToggleEdgeOverlay();
+        MigraineHelper:ToggleFrameOverlay();
     end;
 end

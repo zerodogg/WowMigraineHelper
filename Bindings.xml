@@ -1,8 +1,8 @@
 <Bindings>
   <Binding name="TOGGLEMIGRAINEBARS" runOnUp="false" header="MIGRAINEHELPER" default="ALT-CTRL-M">
-      MigraineHelper:ToggleEdgeOverlay();
+      MigraineHelper:ToggleFrameOverlay();
  </Binding>
   <Binding name="TOGGLEMIGRAINEOVERLAY" runOnUp="false" header="MIGRAINEHELPER" default="ALT-CTRL-D">
-      MigraineHelper:ToggleOpacityOverlay();
+      MigraineHelper:ToggleBrightnessFilter();
  </Binding>
 </Bindings>
