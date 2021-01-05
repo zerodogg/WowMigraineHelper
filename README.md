@@ -16,13 +16,13 @@ customizable (and you may also disable them).
 
 ## Helper modes
 
-### Dark overlay
+### Brightness filter
 
-This toggles an opacity layer above the screen, making the game world a lot
-darker than normal, while the UI remains normal. By default this is bound to
+This toggles a filter overlaying the screen, making the game world a lot less
+bright than normal, while the UI remains normal.  By default this is bound to
 `CTRL-ALT-D`, or you can use `/migrainedark`.
 
-### Edge overlay
+### Frame overlay
 
 This toggles black bars around the screen, which can be used to hide effects
 like the "Cloak of Ve'nari". Any UI elements placed on the edges of the screen
@@ -33,13 +33,14 @@ work as normal.  By default this is bound to `CTRL-ALT-M`, or you can use
 
 To configure Migraine Helper, open up the addon settings panel (`Esc` ->
 `Interface` -> `AddOns` -> `Migraine Helper`). There you can select the width
-and height of the edge overlay, the opacity of the dark overlay and configure
-the key bindings.
+and height of the frame overlay, the strength of the brightness overlay,
+configure the key bindings and set some WoW config options (see below).
 
 ### WoW options
 
 Migraine Helper also gives you access to modify three game graphics settings in
-its UI panel. Toggling these may also help alleviate migraine.
+its UI panel. Toggling these may also help alleviate migraine. Note that
+changes to these persist even if the addon is removed.
 
 ## Issues
 
