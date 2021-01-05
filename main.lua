@@ -359,7 +359,7 @@ end
 
 -- Initialize events
 function MH:InitEvents ()
-    -- Register for the DISPLAY_SIZE_CHANGED that will notify us if the
+    -- Register for the DISPLAY_SIZE_CHANGED event that will notify us if the
     -- resolution changes (which for us means we need to resize the overlays).
     self:RegisterEvent("DISPLAY_SIZE_CHANGED")
 end
