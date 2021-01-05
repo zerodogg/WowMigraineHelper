@@ -48,6 +48,14 @@ Please use the [issue tracker at
 Gitlab](https://gitlab.com/zerodogg/WowMigraineHelper/-/issues) to report any
 issues or submit feature requests.
 
+## Acknowledgements
+
+Thanks to the authors of the [*Ace3*](https://www.wowace.com/projects/ace3)
+config, event and UI library, and the authors of the
+[*LibStub*](https://www.wowace.com/projects/libstub) helper library. These
+libraries handle a lot of the lower level plumbing so I don't have to, and made
+life a lot easier than it would have been without.
+
 ## License
 
 Copyright (C) Eskild Hustvedt 2021
