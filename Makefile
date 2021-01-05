@@ -22,13 +22,13 @@ validateChangelog:
 		exit 1;\
 	fi
 prep:
-	@[ -e libs/AceGUI-3.0 ] || make --no-print-directory wowace
+	@[ -e libs/AceGUI-3.0 ] || make --no-print-directory ace3
 	@[ -e libs/LibStub ] || make --no-print-directory libstub
 distclean: clean
 	rm -f *.zip
 clean:
 	rm -rf libs Ace3 WowMigraineHelper
-wowace: clean
+ace3: clean
 	mkdir -p libs
 	rm -rf libs/Ace*
 	wget -q "https://media.forgecdn.net/files/3078/383/Ace3-Release-$(ACE3_RELEASE).zip" -O Ace3.zip
@@ -42,7 +42,7 @@ libstub:
 	unzip -q LibStub.zip
 	mv LibStub libs
 	rm -f LibStub.zip
-libs: clean wowace libstub
+libs: clean ace3 libstub
 dist: distclean libs
 	mkdir -p WowMigraineHelper
 	cp -r $(DISTFILES) WowMigraineHelper/
