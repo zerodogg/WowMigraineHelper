@@ -17,7 +17,7 @@
 
 local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper","AceEvents-3.0")
+MigraineHelper = LibStub("AceAddon-3.0"):NewAddon("MigraineHelper","AceEvent-3.0")
 local MH = MigraineHelper
 
 -- -----------------
