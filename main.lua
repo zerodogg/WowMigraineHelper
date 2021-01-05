@@ -37,7 +37,7 @@ function MH:BuildFrameElement (relativeTo, relativePoint, width, height)
 end
 
 -- Builds a generic overlay element that defaults to hidden
-function MH:BuildOverlayElement(relativeTo, relativePoint, width, height)
+function MH:BuildOverlayElement(relativeTo, relativePoint, width, height) -- luacheck: ignore 212
     -- Create the frame
     local Element = CreateFrame("Frame", nil, UIParent);
     -- Default to hidden
