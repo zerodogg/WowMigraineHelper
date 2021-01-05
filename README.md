@@ -3,13 +3,13 @@
 [![pipeline status](https://gitlab.com/zerodogg/WowMigraineHelper/badges/master/pipeline.svg)](https://gitlab.com/zerodogg/WowMigraineHelper/-/commits/master)
 
 *WoW Migraine Helper* is an accessibility addon for people that suffer from
-migraines or other headaches. Some areas in WoW have graphics that can hurt or
-trigger migraines. This addon includes two helpers that can mitigate some of
-the effects. These are not subtle, the addon uses the sledgehammer approach to
-problem solving. The intention is to have you quickly enable one of the
-overlays when you're in an area of the game with effects that trigger migraines
-(like the "Cloak of Ve'nari" effect in the Maw), and then disable them
-afterwards.
+migraines or other headaches. Some areas in World of Warcraft have graphics
+that can hurt or trigger migraines. This addon includes two helpers that can
+mitigate some of the effects. These are not subtle, the addon uses the
+sledgehammer approach to problem solving. The intention is to have you quickly
+enable one of the overlays when you're in an area of the game with effects that
+trigger migraines (like the "Cloak of Ve'nari" effect in the Maw), and then
+disable them afterwards.
 
 By default the helpers are bound to `CTRL-ALT-M` and `CTRL-ALT-D`. These are
 customizable (and you may also disable them).
@@ -72,3 +72,8 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+## Third party legal notice
+
+World of Warcraft is a trademark or registered trademark of Blizzard
+Entertainment, Inc.
