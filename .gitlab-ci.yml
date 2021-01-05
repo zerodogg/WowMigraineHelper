@@ -5,5 +5,13 @@ test:
     script:
         - make test
 
+package:
+    stage: build
+    script:
+        - make _gitlabdist
+    only:
+        - /^v\d/
+
 stages:
     - test
+    - build

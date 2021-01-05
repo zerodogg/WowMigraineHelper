@@ -3,6 +3,7 @@ DISTFILES=COPYING *.xml *.lua *.md *.toc libs
 VERSION:=$(shell grep Version: WowMigraineHelper.toc|perl -p -E 's/.+Version:\s+//')
 ACE3_RELEASE=r1241
 LIBSTUB_RELEASE=1.0.2-70000
+ZIPNAME=WowMigraineHelper-$(VERSION).zip
 
 test: prep lint validateTOC validateChangelog
 lint: prep
@@ -46,5 +47,11 @@ libs: clean ace3 libstub
 dist: distclean libs
 	mkdir -p WowMigraineHelper
 	cp -r $(DISTFILES) WowMigraineHelper/
-	zip -q -l -9 -r WowMigraineHelper-$(VERSION).zip WowMigraineHelper
+	zip -q -l -9 -r $(ZIPNAME) WowMigraineHelper
 	rm -rf WowMigraineHelper
+_gitlabdist: dist
+	@if [ "$$CI_JOB_TOKEN" == "" ] || [ "$$CI_API_V4_URL" == "" ]  || [ "$$CI_PROJECT_ID" == "" ]; then\
+		echo "ERROR: The _gitlabdist target is intended for use in gitlab-ci only";\
+		[ "$$CI_JOB_TOKEN" != "" ] && exit 1;\
+	fi
+	curl --header "JOB-TOKEN: $$CI_JOB_TOKEN" --upload-file $(ZIPNAME) "$${CI_API_V4_URL}/projects/$${CI_PROJECT_ID}/packages/generic/WowMigraineHelper/$(VERSION)/$(ZIPNAME)
