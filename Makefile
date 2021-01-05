@@ -28,12 +28,14 @@ clean:
 	rm -rf libs Ace3 WowMigraineHelper
 wowace: clean
 	mkdir -p libs
+	rm -rf libs/Ace*
 	wget -q "https://media.forgecdn.net/files/3078/383/Ace3-Release-r1241.zip" -O Ace3.zip
 	unzip -q Ace3.zip
 	mv Ace3/AceGUI-3.0 Ace3/AceConfig-3.0 Ace3/AceAddon-3.0 libs
 	rm -rf Ace3 Ace3.zip
 libstub:
 	mkdir -p libs
+	rm -rf libs/LibStub
 	wget -q "https://media.forgecdn.net/files/937/452/LibStub-1.0.2-70000.zip" -O LibStub.zip
 	unzip -q LibStub.zip
 	mv LibStub libs
