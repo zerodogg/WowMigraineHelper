@@ -54,4 +54,4 @@ _gitlabdist: dist
 		echo "ERROR: The _gitlabdist target is intended for use in gitlab-ci only";\
 		[ "$$CI_JOB_TOKEN" != "" ] && exit 1;\
 	fi
-	curl --header "JOB-TOKEN: $$CI_JOB_TOKEN" --upload-file $(ZIPNAME) "$${CI_API_V4_URL}/projects/$${CI_PROJECT_ID}/packages/generic/WowMigraineHelper/$(VERSION)/$(ZIPNAME)
+	curl --header "JOB-TOKEN: $$CI_JOB_TOKEN" --upload-file $(ZIPNAME) "$${CI_API_V4_URL}/projects/$${CI_PROJECT_ID}/packages/generic/WowMigraineHelper/$(VERSION)/$(ZIPNAME)"
