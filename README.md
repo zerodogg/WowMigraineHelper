@@ -23,14 +23,14 @@ disable them).
 
 This toggles a filter overlaying the screen, making the game world a lot less
 bright than normal, while the UI remains normal.  By default this is bound to
-`CTRL-ALT-D`, or you can use `/migrainedark`.
+`CTRL-ALT-D`, or you can use `/migrainebrightness`.
 
 ### Frame overlay
 
 This toggles black bars around the screen, which can be used to hide effects
 like the "Cloak of Ve'nari". Any UI elements placed on the edges of the screen
 work as normal.  By default this is bound to `CTRL-ALT-M`, or you can use
-`/migraineedge`.
+`/migraineframe`.
 
 ## Configuration
 

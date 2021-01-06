@@ -1,3 +1,7 @@
+#### 0.2.1
+- Renamed /migraineedge to /migraineframe (the old one still works)
+- Renamed /migrainedark to /migrainebrightness (the old one still works)
+
 #### 0.2
 - Various code refactoring
 - Listen to events for screen resolution changes and update overlays

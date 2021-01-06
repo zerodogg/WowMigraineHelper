@@ -402,13 +402,15 @@ function MH:OnInitialize ()
     BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
     BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
     -- Slash function for toggling the brightness filter overlay
-    SLASH_MIGRAINEDARK1 = "/migrainedark";
-    SlashCmdList["MIGRAINEDARK"] = function ()
+    SLASH_MIGRAINEBRIGHTNESS1 = "/migrainebrightness";
+    SLASH_MIGRAINEBRIGHTNESS2 = "/migrainedark"; -- Kept for backwards compatibility
+    SlashCmdList["MIGRAINEBRIGHTNESS"] = function ()
         MigraineHelper:ToggleBrightnessFilter();
     end;
     -- Slash function for toggling the edge overlay
-    SLASH_MIGRAINEEDGE1 = "/migraineedge";
-    SlashCmdList["MIGRAINEEDGE"] = function ()
+    SLASH_MIGRAINEFRAME1 = "/migraineframe";
+    SLASH_MIGRAINEFRAME2 = "/migraineedge"; -- Kept for backwards compatibility
+    SlashCmdList["MIGRAINEFRAME"] = function ()
         MigraineHelper:ToggleFrameOverlay();
     end;
 end
