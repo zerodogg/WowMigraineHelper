@@ -1,6 +1,7 @@
 #### 0.2.1
 - Renamed /migraineedge to /migraineframe (the old one still works)
 - Renamed /migrainedark to /migrainebrightness (the old one still works)
+- Corrected the name used for keybindings in the WoW keybind UI
 
 #### 0.2
 - Various code refactoring

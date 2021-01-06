@@ -399,8 +399,8 @@ function MH:OnInitialize ()
     -- Header for our section under keybindings
     BINDING_HEADER_MIGRAINEHELPER = "Migraine Helper";
     -- Names for our keybindings
-    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle black bars";
-    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle overlay";
+    BINDING_NAME_TOGGLEMIGRAINEBARS = "Toggle frame";
+    BINDING_NAME_TOGGLEMIGRAINEOVERLAY = "Toggle brightness";
     -- Slash function for toggling the brightness filter overlay
     SLASH_MIGRAINEBRIGHTNESS1 = "/migrainebrightness";
     SLASH_MIGRAINEBRIGHTNESS2 = "/migrainedark"; -- Kept for backwards compatibility
