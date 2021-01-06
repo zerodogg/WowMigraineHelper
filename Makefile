@@ -4,6 +4,7 @@ VERSION:=$(shell grep Version: WowMigraineHelper.toc|perl -p -E 's/.+Version:\s+
 ACE3_RELEASE=r1241
 LIBSTUB_RELEASE=1.0.2-70000
 ZIPNAME=WowMigraineHelper-$(VERSION).zip
+VERSIONREGEX=/^\d+\.\d+\.\d+/
 
 test: prep lint validateTOC validateChangelog
 lint: prep
@@ -25,6 +26,7 @@ validateChangelog:
 prep:
 	@[ -e libs/AceGUI-3.0 ] || make --no-print-directory ace3
 	@[ -e libs/LibStub ] || make --no-print-directory libstub
+	@perl -E 'die("Invalid VERSION string - $(VERSION) - should match $(VERSIONREGEX)\n") if "$(VERSION)" !~ $(VERSIONREGEX)'
 distclean: clean
 	rm -f *.zip
 clean:
