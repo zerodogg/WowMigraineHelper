@@ -1,3 +1,5 @@
+#### 0.3.1
+
 #### 0.3
 - Renamed /migraineedge to /migraineframe (the old one still works)
 - Renamed /migrainedark to /migrainebrightness (the old one still works)
