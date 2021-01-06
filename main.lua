@@ -259,7 +259,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     order = 5,
                     name = "Reduce the brightness of the UI as well",
                     type = "toggle",
-                    width = "full",
+                    width = "double",
                     get = function () return WowMigraineHelperConfig.OverlayIncludeUI end,
                     set = function (info, val) -- luacheck: ignore 212
                         WowMigraineHelperConfig.OverlayIncludeUI = val;
