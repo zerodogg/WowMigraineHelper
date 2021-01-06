@@ -1,7 +1,7 @@
 ## Interface: 90002
 ## Title: Migraine Helper
 ## Author: Eskild Hustvedt
-## Version: 0.2.1
+## Version: 0.3
 ## Notes: A very simple helper addon to mitigate migraine-inducing graphics
 ## X-License: GPL v3
 ## X-Website: https://gitlab.com/zerodogg/WowMigraineHelper

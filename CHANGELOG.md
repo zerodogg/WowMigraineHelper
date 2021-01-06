@@ -1,4 +1,4 @@
-#### 0.2.1
+#### 0.3
 - Renamed /migraineedge to /migraineframe (the old one still works)
 - Renamed /migrainedark to /migrainebrightness (the old one still works)
 - Added a setting for including UI elements in the brightness filter
