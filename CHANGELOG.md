@@ -1,6 +1,7 @@
 #### 0.2.1
 - Renamed /migraineedge to /migraineframe (the old one still works)
 - Renamed /migrainedark to /migrainebrightness (the old one still works)
+- Added a setting for including UI elements in the brightness filter
 - Corrected the name used for keybindings in the WoW keybind UI
 
 #### 0.2

@@ -87,9 +87,10 @@ function MH:BuildOverlay ()
     self.BrightnessFilterOverlay.bg = self.BrightnessFilterOverlay:CreateTexture();
         -- Size the background to cover all of the overlay
     self.BrightnessFilterOverlay.bg:SetAllPoints(self.BrightnessFilterOverlay);
-        -- Add a black colour with the opacity set in the config
-    self.BrightnessFilterOverlay.bg:SetColorTexture(0, 0, 0, WowMigraineHelperConfig.OverlayOpacity);
+    -- Call the refresh function to set the opacity and strata
+    self:RefreshBrightnessFilterOverlay();
 end
+
 
 -- ---------------------------------------------------------
 -- Overlay refresh methods (after config or display changes)
@@ -115,6 +116,13 @@ end
 -- Refreshes the BrightnessFilterOverlay
 function MH:RefreshBrightnessFilterOverlay ()
     self.BrightnessFilterOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
+    if WowMigraineHelperConfig.OverlayIncludeUI then
+        self.BrightnessFilterOverlay:SetFrameStrata("TOOLTIP")
+        self.BrightnessFilterOverlay:SetFrameLevel(10000)
+    else
+        self.BrightnessFilterOverlay:SetFrameStrata("BACKGROUND")
+        self.BrightnessFilterOverlay:SetFrameLevel(0)
+    end
 end
 
 -- Force-refreshes both when the DISPLAY_SIZE_CHANGED event is received
@@ -178,6 +186,9 @@ function MH:InitConfig () -- luacheck: ignore 212
     end
     if WowMigraineHelperConfig.OverlayOpacity == nil then
         WowMigraineHelperConfig.OverlayOpacity = 0.7;
+    end
+    if WowMigraineHelperConfig.OverlayIncludeUI == nil then
+        WowMigraineHelperConfig.OverlayIncludeUI = false
     end
 end
 
@@ -243,9 +254,21 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     max = 0.99,
                     isPercent = true,
                 },
+                -- Toggler for including or excluding UI elements
+                brightnessUIOverlay = {
+                    order = 5,
+                    name = "Reduce the brightness of the UI as well",
+                    type = "toggle",
+                    width = "full",
+                    get = function () return WowMigraineHelperConfig.OverlayIncludeUI end,
+                    set = function (info, val) -- luacheck: ignore 212
+                        WowMigraineHelperConfig.OverlayIncludeUI = val;
+                        MH:RefreshBrightnessFilterOverlay();
+                    end,
+                },
                 -- Header for the key bindings section
                 keyBindingHeader = {
-                    order = 5,
+                    order = 6,
                     name = "Key bindings",
                     type = "header",
                 },
@@ -254,7 +277,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
 					desc = "Bind a key to toggle the frame",
 					type = "keybinding",
 					name = "Show/hide frame",
-					order = 6,
+					order = 7,
 					width = "double",
 					set = function(info,val) -- luacheck: ignore 212
 						local b1, b2 = GetBindingKey("TOGGLEMIGRAINEBARS")
@@ -270,7 +293,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     desc = "Bind a key to toggle the brightness filter",
                     type = "keybinding",
                     name = "Enable/disable the brightness filter",
-                    order = 7,
+                    order = 8,
                     width = "double",
 					set = function(info,val) -- luacheck: ignore 212
                         local b1, b2 = GetBindingKey("TOGGLEMIGRAINEOVERLAY")
@@ -283,19 +306,19 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 },
                 -- Header for the section providing checkboxes for turning either filter on and off
                 toggleHeader = {
-                    order = 8,
+                    order = 9,
                     name = "Enable/disable",
                     type = "header",
                 },
                 -- A description for the togglers
                 toggleDescription = {
-                    order = 9,
+                    order = 10,
                     type = "description",
                     name = "Note: enabling/disabling the features here will not be permanent. They will still default to off on each login.",
                 },
                 -- Checkbox for the frame overlay
                 toggleEdge = {
-                    order = 10,
+                    order = 11,
                     type = "toggle",
                     name = "Frame overlay",
                     desc = "Toggles the frame overlay. You may also use the keybinding above or the command /migraineedge.",
@@ -304,7 +327,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 },
                 -- Checkbox for the opacity overlay
                 toggleOpacity = {
-                    order = 11,
+                    order = 12,
                     type = "toggle",
                     name = "Brightness filter",
                     desc = "Toggles the brightness filter. You may also use the keybinding above or the command /migrainedark.",
@@ -313,19 +336,19 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 },
                 -- WoW config values header
                 wowConfigHeader = {
-                    order = 12,
+                    order = 13,
                     name = "WoW Config",
                     type = "header",
                 },
                 -- Persistence notice for config options
                 wowConfigDescription = {
-                    order = 13,
+                    order = 14,
                     type = "description",
                     name = "These are World of Warcraft configuration options, they are saved when you log out of the game. Changes to these will persist even if you remove the Migraine Helper addon.",
                 },
                 -- ffxNether
                 toggleNether = {
-                    order = 14,
+                    order = 15,
                     name = 'Enable the netherworld effect',
                     desc = "Sets the CVar 'ffxNether'",
                     width = "full",
@@ -341,7 +364,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 },
                 -- ffxGlow
                 toggleGlow = {
-                    order = 15,
+                    order = 16,
                     name = 'Enable full screen glow effects',
                     desc = "Sets the CVar 'ffxGlow'",
                     width = "full",
@@ -357,7 +380,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 },
                 -- ffxDeath
                 toggleDeathEff = {
-                    order = 16,
+                    order = 17,
                     name = 'Enable the full screen death effect',
                     desc = "Sets the CVar 'ffxDeath'",
                     width = "full",
