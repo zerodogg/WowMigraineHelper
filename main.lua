@@ -186,11 +186,13 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
 	AceConfig:RegisterOptionsTable("Migraine Helper", {
 			type = "group",
 			args = {
+                -- Header for the frame settings
                 frameHeader = {
                     name = "Screen frame",
                     type = "header",
                     order = 0,
                 },
+                -- Percentage slider for the width of the vertical framing elements
 				vertWidth = {
                     order = 1,
 					name = "Width",
@@ -205,6 +207,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     min = 0.01,
                     max = 0.45,
 				},
+                -- Percentage slider for the height of the horizontal framing elements
 				horizHeight = {
                     order = 2,
 					name = "Height",
@@ -219,11 +222,13 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     min = 0.01,
                     max = 0.45,
 				},
+                -- Header for the brightness filter
                 brightnessFilterHeader = {
                     order = 3,
                     name = "Brightness filter",
                     type = "header",
                 },
+                -- Slider for the opacity (strength) of the brightness filter
                 brightnessFilter = {
                     order = 4,
                     name = "Filter strength",
@@ -238,11 +243,13 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     max = 0.99,
                     isPercent = true,
                 },
+                -- Header for the key bindings section
                 keyBindingHeader = {
                     order = 5,
                     name = "Key bindings",
                     type = "header",
                 },
+                -- Keybinding for toggling the frame
 				frameKeybinding = {
 					desc = "Bind a key to toggle the frame",
 					type = "keybinding",
@@ -258,6 +265,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
 					end,
 					get = function(info) return GetBindingKey("TOGGLEMIGRAINEBARS") end, -- luacheck: ignore 212
 				},
+                -- Keybinding for toggling the brightness filter
                 brightnessFilterKeybinding = {
                     desc = "Bind a key to toggle the brightness filter",
                     type = "keybinding",
@@ -273,40 +281,49 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     end,
                     get = function(info) return GetBindingKey("TOGGLEMIGRAINEOVERLAY") end, -- luacheck: ignore 212
                 },
+                -- Header for the section providing checkboxes for turning either filter on and off
                 toggleHeader = {
                     order = 8,
                     name = "Enable/disable",
                     type = "header",
                 },
+                -- A description for the togglers
                 toggleDescription = {
                     order = 9,
                     type = "description",
                     name = "Note: enabling/disabling the features here will not be permanent. They will still default to off on each login.",
                 },
+                -- Checkbox for the frame overlay
                 toggleEdge = {
                     order = 10,
                     type = "toggle",
                     name = "Frame overlay",
+                    desc = "Toggles the frame overlay. You may also use the keybinding above or the command /migraineedge.",
                     get = function () return MH.FrameLeft:IsShown() end,
                     set = function () MH:ToggleFrameOverlay() end,
                 },
+                -- Checkbox for the opacity overlay
                 toggleOpacity = {
                     order = 11,
                     type = "toggle",
                     name = "Brightness filter",
+                    desc = "Toggles the brightness filter. You may also use the keybinding above or the command /migrainedark.",
                     get = function () return MH.BrightnessFilterOverlay:IsShown() end,
                     set = function () MH:ToggleBrightnessFilter() end,
                 },
+                -- WoW config values header
                 wowConfigHeader = {
                     order = 12,
                     name = "WoW Config",
                     type = "header",
                 },
+                -- Persistence notice for config options
                 wowConfigDescription = {
                     order = 13,
                     type = "description",
                     name = "These are World of Warcraft configuration options, they are saved when you log out of the game. Changes to these will persist even if you remove the Migraine Helper addon.",
                 },
+                -- ffxNether
                 toggleNether = {
                     order = 14,
                     name = 'Enable the netherworld effect',
@@ -322,6 +339,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                         SetCVar("ffxNether",noVal)
                     end,
                 },
+                -- ffxGlow
                 toggleGlow = {
                     order = 15,
                     name = 'Enable full screen glow effects',
@@ -337,6 +355,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                         SetCVar("ffxGlow",noVal)
                     end,
                 },
+                -- ffxDeath
                 toggleDeathEff = {
                     order = 16,
                     name = 'Enable the full screen death effect',
@@ -354,6 +373,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                 },
 			},
 		}, {"migrainehelper"});
+    -- Generate the config dialog under the interface -> addons panel
     AceConfigDialog:AddToBlizOptions("Migraine Helper");
 end
 
