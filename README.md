@@ -22,8 +22,10 @@ disable them).
 ### Brightness filter
 
 This toggles a filter overlaying the screen, making the game world a lot less
-bright than normal, while the UI remains normal.  By default this is bound to
-`CTRL-ALT-D`, or you can use `/migrainebrightness`.
+bright than normal. By default the filter leaves UI elements untouched, but you
+can configure it to also reduce the brightness of the UI elements, which can be
+useful during a migraine attack. By default this is bound to `CTRL-ALT-D`, or
+you can use `/migrainebrightness`.
 
 ### Frame overlay
 
@@ -36,7 +38,8 @@ work as normal.  By default this is bound to `CTRL-ALT-M`, or you can use
 
 To configure Migraine Helper, open up the addon settings panel (`Esc` ->
 `Interface` -> `AddOns` -> `Migraine Helper`). There you can select the width
-and height of the frame overlay, the strength of the brightness overlay,
+and height of the frame overlay, the strength of the brightness overlay, choose
+if you want to include the UI elements in the brightness filter or not,
 configure the key bindings and set some WoW config options (see below).
 
 ### WoW options
