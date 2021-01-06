@@ -49,9 +49,15 @@ dist: distclean libs
 	cp -r $(DISTFILES) WowMigraineHelper/
 	zip -q -l -9 -r $(ZIPNAME) WowMigraineHelper
 	rm -rf WowMigraineHelper
+_GITLABDIST_TOKEN?=JOB-TOKEN: $(CI_JOB_TOKEN)
+# Uploads the package to gitlab and creates a new release
 _gitlabdist: dist
-	@if [ "$$CI_JOB_TOKEN" == "" ] || [ "$$CI_API_V4_URL" == "" ]  || [ "$$CI_PROJECT_ID" == "" ]; then\
+	@if [ "$(_GITLABDIST_TOKEN)" == "JOB-TOKEN: " ]; then \
 		echo "ERROR: The _gitlabdist target is intended for use in gitlab-ci only";\
 		[ "$$CI_JOB_TOKEN" != "" ] && exit 1;\
 	fi
 	curl --header "JOB-TOKEN: $$CI_JOB_TOKEN" --upload-file $(ZIPNAME) "$${CI_API_V4_URL}/projects/$${CI_PROJECT_ID}/packages/generic/WowMigraineHelper/v$(VERSION)/$(ZIPNAME)"
+	PACKAGE="$$( curl -s --header "$(_GITLABDIST_TOKEN)" "https://gitlab.com/api/v4/projects/23433152/packages/" |jq -r '.[] |select (.version=="0.3.0")|._links.web_path' )";\
+	curl -s --header 'Content-Type: application/json' --header "$(_GITLABDIST_TOKEN)" \
+		--data '{ "name": "v$(VERSION)", "tag_name": "v$(VERSION)", "assets": { "links": [{ "name": "$(ZIPNAME)", "url": "https://gitlab.com$$PACKAGE", "link_type":"package" }] } }' \
+		--request POST "https://gitlab.com/api/v4/projects/23433152/releases"
