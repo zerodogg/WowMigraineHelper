@@ -189,7 +189,7 @@ function MH:InitConfig () -- luacheck: ignore 212
         cfg.Height = 0.27;
     end
     -- Reset brightness filter opacity to 0.7 if there's no value or if the value is invalid
-    if cfg.OverlayOpacity == nil or type(cfg.OverlayOpacity) ~= "number" or cfg.OverlayOpacity > 0.99 or cfg.OverlayOpacity < 0.01 then
+    if cfg.OverlayOpacity == nil or type(cfg.OverlayOpacity) ~= "number" or cfg.OverlayOpacity > 0.95 or cfg.OverlayOpacity < 0.01 then
         cfg.OverlayOpacity = 0.7;
     end
     -- Set the brightness filter to not include the UI if there's no value or the value is invalid
@@ -257,7 +257,7 @@ function MH:InitConfigScreen ()  -- luacheck: ignore 212
                     end,
                     get = function (info) return WowMigraineHelperConfig.OverlayOpacity end, -- luacheck: ignore 212
                     min = 0.1,
-                    max = 0.99,
+                    max = 0.95,
                     isPercent = true,
                 },
                 -- Toggler for including or excluding UI elements
