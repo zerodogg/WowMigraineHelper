@@ -150,34 +150,42 @@ end
 
 -- Toggles the brightness filter
 function MH:ToggleBrightnessFilter ()
+    local isActive
     if self.BrightnessFilterOverlay:IsShown() == true then
+        -- Filter is currently enabled, disable it
         self.BrightnessFilterOverlay:Hide();
-        WowMigraineHelperConfig.stateBrightnessFilterEnabled = false
+        isActive = false
     else
+        -- Filter is currently disabled, enable it
         self:RefreshBrightnessFilterOverlay();
         self.BrightnessFilterOverlay:Show();
-        WowMigraineHelperConfig.stateBrightnessFilterEnabled = true
+        isActive = true
     end
     self:RefreshConfigDialog();
+    WowMigraineHelperConfig.stateBrightnessFilterEnabled = isActive
 end
 
 -- Toggles the screen-edge overlays
 function MH:ToggleFrameOverlay ()
+    local isActive
     if self.FrameLeft:IsShown() == true then
+        -- Frame is currently enabled, disable it
         self.FrameLeft:Hide();
         self.FrameRight:Hide();
         self.FrameTop:Hide();
         self.FrameBottom:Hide();
-        WowMigraineHelperConfig.stateFrameEnabled = false
+        isActive = false
     else
+        -- Frame is currently disabled, enable it
         self:RefreshFrame();
         self.FrameLeft:Show();
         self.FrameRight:Show();
         self.FrameTop:Show();
         self.FrameBottom:Show();
-        WowMigraineHelperConfig.stateFrameEnabled = true
+        isActive = true
     end
     self:RefreshConfigDialog();
+    WowMigraineHelperConfig.stateFrameEnabled = isActive
 end
 
 -- Notifies AceConfigDialog about changes to config options (ie. the overlays
