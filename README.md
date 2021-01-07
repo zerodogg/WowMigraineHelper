@@ -62,6 +62,15 @@ config, event and UI library, and the authors of the
 libraries handle a lot of the lower level plumbing so I don't have to, and made
 life a lot easier than it would have been without.
 
+## Getting WoW Migraine Helper
+
+You can install WoW Migraine Helper from
+[WoWInterface](https://www.wowinterface.com/downloads/fileinfo.php?id=25862) or
+[Curseforge](https://www.curseforge.com/wow/addons/migraine-helper) using your
+favourite WoW addon manager, like [WowUp](https://wowup.io/), or you can
+[download the zip directly from
+gitlab](https://gitlab.com/zerodogg/WowMigraineHelper/-/releases).
+
 ## License
 
 Copyright (C) Eskild Hustvedt 2021
