@@ -175,20 +175,26 @@ end
 
 -- Initialize the config
 function MH:InitConfig () -- luacheck: ignore 212
+    -- Initialize if there's no saved value
     if WowMigraineHelperConfig == nil then
         WowMigraineHelperConfig = {}
     end
-    if WowMigraineHelperConfig.Width == nil then
-        WowMigraineHelperConfig.Width = 0.27;
+    local cfg = WowMigraineHelperConfig;
+    -- Reset frame width to 0.27 if there's no value or if the value is invalid
+    if cfg.Width == nil or type(cfg.Width) ~= "number" or cfg.Width > 0.99 or cfg.Width < 0.01 then
+        cfg.Width = 0.27;
     end
-    if WowMigraineHelperConfig.Height == nil then
-        WowMigraineHelperConfig.Height = 0.27;
+    -- Reset frame height to 0.27 if there's no value or if the value is invalid
+    if cfg.Height == nil or type(cfg.Height) ~= "number" or cfg.Height > 0.99 or cfg.Height < 0.01 then
+        cfg.Height = 0.27;
     end
-    if WowMigraineHelperConfig.OverlayOpacity == nil then
-        WowMigraineHelperConfig.OverlayOpacity = 0.7;
+    -- Reset brightness filter opacity to 0.7 if there's no value or if the value is invalid
+    if cfg.OverlayOpacity == nil or type(cfg.OverlayOpacity) ~= "number" or cfg.OverlayOpacity > 0.99 or cfg.OverlayOpacity < 0.01 then
+        cfg.OverlayOpacity = 0.7;
     end
-    if WowMigraineHelperConfig.OverlayIncludeUI == nil then
-        WowMigraineHelperConfig.OverlayIncludeUI = false
+    -- Set the brightness filter to not include the UI if there's no value or the value is invalid
+    if type(cfg.OverlayIncludeUI) ~= "boolean" then
+        cfg.OverlayIncludeUI = false
     end
 end
 
