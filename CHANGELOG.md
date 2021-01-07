@@ -1,3 +1,7 @@
+#### 0.4.1
+
+- Corrected some text in the settings screen that was no longer valid
+
 #### 0.4.0
 
 - The brightness filter's strength is now maximum 95%
