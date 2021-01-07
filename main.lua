@@ -66,24 +66,28 @@ end
 
 -- Constructs the framing elements
 function MH:BuildFrame ()
-    local width = GetScreenWidth();
-    local height = GetScreenHeight();
-    local VertBlockWidth = width*WowMigraineHelperConfig.Width;
-    local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
-    self.FrameLeft = self:BuildFrameElement("LEFT","LEFT", VertBlockWidth, height);
-    self.FrameRight =self:BuildFrameElement("RIGHT","RIGHT", VertBlockWidth, height);
-    self.FrameTop = self:BuildFrameElement("TOP","TOP",width,HorizBlockHeight);
-    self.FrameBottom = self:BuildFrameElement("BOTTOM","BOTTOM",width,HorizBlockHeight);
+    -- Query WoW for the current game resolution
+    local width            = GetScreenWidth();
+    local height           = GetScreenHeight();
+    -- Calculate the dimensions of the frame
+    local VertBlockWidth   = width*WowMigraineHelperConfig.Width;
+    local HorizBlockHeight = height*WowMigraineHelperConfig.Height;
+    -- Build the framing  elements
+    self.FrameLeft         = self:BuildFrameElement("LEFT","LEFT", VertBlockWidth, height);
+    self.FrameRight        = self:BuildFrameElement("RIGHT","RIGHT", VertBlockWidth, height);
+    self.FrameTop          = self:BuildFrameElement("TOP","TOP",width,HorizBlockHeight);
+    self.FrameBottom       = self:BuildFrameElement("BOTTOM","BOTTOM",width,HorizBlockHeight);
 end
 
 -- Constructs BrightnessFilterOverlay
 function MH:BuildOverlay ()
-    -- Our overlay should fit over the whole screen
-    local width = GetScreenWidth();
-    local height = GetScreenHeight();
+    -- Query WoW for the current game resolution. The overlay should fit over
+    -- the whole screen.
+    local width                     = GetScreenWidth();
+    local height                    = GetScreenHeight();
     -- Create the frame
-    self.BrightnessFilterOverlay = self:BuildOverlayElement("CENTER","CENTER",width,height);
-    -- Add a background
+    self.BrightnessFilterOverlay    = self:BuildOverlayElement("CENTER","CENTER",width,height);
+    -- Add a background texture
     self.BrightnessFilterOverlay.bg = self.BrightnessFilterOverlay:CreateTexture();
         -- Size the background to cover all of the overlay
     self.BrightnessFilterOverlay.bg:SetAllPoints(self.BrightnessFilterOverlay);
@@ -98,15 +102,20 @@ end
 
 -- Refreshes the framing widgets
 function MH:RefreshFrame ()
-    local width = GetScreenWidth();
-    local height = GetScreenHeight();
-    local VertBlockWidth = width*WowMigraineHelperConfig.Width;
-    local HorizBlockHeight= height*WowMigraineHelperConfig.Height;
+    -- Query WoW for the current game resolution.
+    local width            = GetScreenWidth();
+    local height           = GetScreenHeight();
+    -- Calculate the size of the frame
+    local VertBlockWidth   = width*WowMigraineHelperConfig.Width;
+    local HorizBlockHeight = height*WowMigraineHelperConfig.Height;
+
+    -- Size the left and right frame
     self.FrameLeft:SetWidth(VertBlockWidth);
     self.FrameRight:SetWidth(VertBlockWidth);
     self.FrameLeft:SetHeight(height);
     self.FrameRight:SetHeight(height);
 
+    -- Size the top and bottom frame
     self.FrameTop:SetWidth(width);
     self.FrameBottom:SetWidth(width);
     self.FrameTop:SetHeight(HorizBlockHeight);
@@ -117,9 +126,13 @@ end
 function MH:RefreshBrightnessFilterOverlay ()
     self.BrightnessFilterOverlay.bg:SetColorTexture(0,0,0, WowMigraineHelperConfig.OverlayOpacity);
     if WowMigraineHelperConfig.OverlayIncludeUI then
+        -- When including the UI we try as hard as we can to be on top of all
+        -- UI elements.
         self.BrightnessFilterOverlay:SetFrameStrata("TOOLTIP")
         self.BrightnessFilterOverlay:SetFrameLevel(10000)
     else
+        -- When not including the UI we try as hard as we can to just sit above
+        -- the game world, with all of the UI above us
         self.BrightnessFilterOverlay:SetFrameStrata("BACKGROUND")
         self.BrightnessFilterOverlay:SetFrameLevel(0)
     end
