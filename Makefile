@@ -58,8 +58,8 @@ _gitlabdist: dist
 		echo "ERROR: The _gitlabdist target is intended for use in gitlab-ci only";\
 		[ "$$CI_JOB_TOKEN" != "" ] && exit 1;\
 	fi
-	curl --header "JOB-TOKEN: $$CI_JOB_TOKEN" --upload-file $(ZIPNAME) "$${CI_API_V4_URL}/projects/$${CI_PROJECT_ID}/packages/generic/WowMigraineHelper/v$(VERSION)/$(ZIPNAME)"
-	PACKAGE="$$( curl -s --header "$(_GITLABDIST_TOKEN)" "https://gitlab.com/api/v4/projects/23433152/packages/" |jq -r '.[] |select (.version=="0.3.0")|._links.web_path' )";\
+	curl --header "JOB-TOKEN: $$CI_JOB_TOKEN" --upload-file $(ZIPNAME) "$${CI_API_V4_URL}/projects/$${CI_PROJECT_ID}/packages/generic/WowMigraineHelper/$(VERSION)/$(ZIPNAME)"
+	PACKAGE="$$( curl -s --header "$(_GITLABDIST_TOKEN)" "https://gitlab.com/api/v4/projects/23433152/packages/" |jq -r '.[] |select (.version=="$(VERSION)")|._links.web_path' )";\
 	curl -s --header 'Content-Type: application/json' --header "$(_GITLABDIST_TOKEN)" \
 		--data '{ "name": "v$(VERSION)", "tag_name": "v$(VERSION)", "assets": { "links": [{ "name": "$(ZIPNAME)", "url": "https://gitlab.com$$PACKAGE", "link_type":"package" }] } }' \
 		--request POST "https://gitlab.com/api/v4/projects/23433152/releases"
