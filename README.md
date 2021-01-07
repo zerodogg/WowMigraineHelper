@@ -37,7 +37,8 @@ work as normal.  By default this is bound to `CTRL-ALT-M`, or you can use
 ## Configuration
 
 To configure Migraine Helper, open up the addon settings panel (`Esc` ->
-`Interface` -> `AddOns` -> `Migraine Helper`). There you can select the width
+`Interface` -> `AddOns` -> `Migraine Helper`). There you can choose if you want
+the addon to remember enabled filters the next time you log in, select the width
 and height of the frame overlay, the strength of the brightness filter, choose
 if you want to include the UI elements in the brightness filter or not,
 configure the key bindings and set some WoW config options (see below).

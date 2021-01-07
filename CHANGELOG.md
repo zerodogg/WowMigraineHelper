@@ -1,6 +1,7 @@
-#### 0.3.1
+#### 0.4.0
 
-- The brightness filter's strengt is now maximum 95%
+- The brightness filter's strength is now maximum 95%
+- Added an option to remember the filter state on next login
 
 #### 0.3
 - Renamed /migraineedge to /migraineframe (the old one still works)
