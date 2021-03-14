@@ -1,3 +1,6 @@
+#### 0.4.2
+- Bumped interface version for 9.0.5
+
 #### 0.4.1
 
 - Corrected some text in the settings screen that was no longer valid
